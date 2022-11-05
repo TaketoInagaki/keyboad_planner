@@ -14,6 +14,7 @@ CREATE TABLE `task`
 (
     `id`        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'タスクの識別子',
     `user_id`   BIGINT UNSIGNED NOT NULL COMMENT 'タスクを作成したユーザーの識別子',
+    `title`    VARCHAR(128) NOT NULL COMMENT 'タスクのタイトル',
     `date`      DATETIME(6) NOT NULL COMMENT 'タスクの日程',
     `date_type` VARCHAR(20) NOT NULL COMMENT 'タスクの種類',
     `created`   DATETIME(6) NOT NULL COMMENT 'レコード作成日時',

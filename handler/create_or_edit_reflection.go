@@ -33,7 +33,6 @@ func (at *CreateOrEditReflection) ServeHTTP(w http.ResponseWriter, r *http.Reque
 		}, http.StatusBadRequest)
 		return
 	}
-
 	t, err := at.Service.CreateOrEditReflection(ctx, body.Content, body.ContentType, body.Date , body.DateType)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{

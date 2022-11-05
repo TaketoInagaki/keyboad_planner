@@ -75,7 +75,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 
 	// 振り返り系API
 	cr := &handler.CreateOrEditReflection{
-		Service: &service.CreateOrEditReflection{DB: db, Repo: &r},
+		Service:   &service.CreateOrEditReflection{DB: db, Repo: &r},
 		Validator: v,
 	}
 	mux.Route("/reflection", func(r chi.Router) {

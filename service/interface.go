@@ -25,3 +25,7 @@ type UserGetter interface {
 type TokenGenerator interface {
 	GenerateToken(ctx context.Context, u entity.User) ([]byte, error)
 }
+
+type ReflectionCreator interface {
+	CreateOrEditReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
+}

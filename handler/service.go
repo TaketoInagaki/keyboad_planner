@@ -22,3 +22,7 @@ type RegisterUserService interface {
 type LoginService interface {
 	Login(ctx context.Context, name, pw string) (string, error)
 }
+
+type CreateOrEditReflectionService interface {
+	CreateOrEditReflection(ctx context.Context, content string, contentType entity.ContentType, date string, dateType entity.DateType) (*entity.Reflection, error)
+}

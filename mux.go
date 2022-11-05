@@ -31,6 +31,8 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	if err != nil {
 		return nil, cleanup, err
 	}
+
+	// 認証認可系
 	jwter, err := auth.NewJWTer(rcli, clocker)
 	if err != nil {
 		return nil, cleanup, err
@@ -49,6 +51,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Validator: v,
 	}
 	mux.Post("/login", l.ServeHTTP)
+	mux.Route("/admin", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter), handler.AdminMiddleware)
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/json; charset=utf-8")
+			_, _ = w.Write([]byte(`{"message": "admin only"}`))
+		})
+	})
+
+	// タスク系
 	at := &handler.AddTask{
 		Service:   &service.AddTask{DB: db, Repo: &r},
 		Validator: v,
@@ -61,12 +72,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Post("/", at.ServeHTTP)
 		r.Get("/", lt.ServeHTTP)
 	})
-	mux.Route("/admin", func(r chi.Router) {
-		r.Use(handler.AuthMiddleware(jwter), handler.AdminMiddleware)
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Content-Type", "application/json; charset=utf-8")
-			_, _ = w.Write([]byte(`{"message": "admin only"}`))
-		})
+
+	// 振り返り系API
+	cr := &handler.CreateOrEditReflection{
+		Service: &service.CreateOrEditReflection{DB: db, Repo: &r},
+		Validator: v,
+	}
+	mux.Route("/reflection", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", cr.ServeHTTP)
 	})
 
 	return mux, cleanup, nil

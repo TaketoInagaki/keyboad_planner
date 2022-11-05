@@ -10,11 +10,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/budougumi0617/go_todo_app/clock"
-	"github.com/budougumi0617/go_todo_app/entity"
-	"github.com/budougumi0617/go_todo_app/store"
-	"github.com/budougumi0617/go_todo_app/testutil"
-	"github.com/budougumi0617/go_todo_app/testutil/fixture"
+	"github.com/TaketoInagaki/keyboad_planner/clock"
+	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboad_planner/store"
+	"github.com/TaketoInagaki/keyboad_planner/testutil"
+	"github.com/TaketoInagaki/keyboad_planner/testutil/fixture"
 	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwk"
@@ -119,7 +119,7 @@ func TestJWTer_GetJWT(t *testing.T) {
 	c := clock.FixedClocker{}
 	want, err := jwt.NewBuilder().
 		JwtID(uuid.New().String()).
-		Issuer(`github.com/budougumi0617/go_todo_app`).
+		Issuer(`github.com/TaketoInagaki/keyboad_planner`).
 		Subject("access_token").
 		IssuedAt(c.Now()).
 		Expiration(c.Now().Add(30*time.Minute)).
@@ -176,7 +176,7 @@ func TestJWTer_GetJWT_NG(t *testing.T) {
 	c := clock.FixedClocker{}
 	tok, err := jwt.NewBuilder().
 		JwtID(uuid.New().String()).
-		Issuer(`github.com/budougumi0617/go_todo_app`).
+		Issuer(`github.com/TaketoInagaki/keyboad_planner`).
 		Subject("access_token").
 		IssuedAt(c.Now()).
 		Expiration(c.Now().Add(30*time.Minute)).

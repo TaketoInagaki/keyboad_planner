@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/budougumi0617/go_todo_app/store"
+	"github.com/TaketoInagaki/keyboad_planner/store"
 )
 
 type Login struct {

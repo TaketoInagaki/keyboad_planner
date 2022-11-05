@@ -5,8 +5,8 @@ package service
 
 import (
 	"context"
-	"github.com/budougumi0617/go_todo_app/entity"
-	"github.com/budougumi0617/go_todo_app/store"
+	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboad_planner/store"
 	"sync"
 )
 

@@ -7,8 +7,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
-	"github.com/TaketoInagaki/keyboad_planner/testutil"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/testutil"
 )
 
 func TestListTask(t *testing.T) {

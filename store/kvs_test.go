@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
-	"github.com/TaketoInagaki/keyboad_planner/testutil"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/testutil"
 )
 
 func TestKVS_Save(t *testing.T) {

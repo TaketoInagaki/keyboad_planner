@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 	"github.com/go-playground/validator/v10"
 )
 

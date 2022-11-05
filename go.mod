@@ -1,4 +1,4 @@
-module github.com/TaketoInagaki/keyboad_planner
+module github.com/TaketoInagaki/keyboard_planner
 
 go 1.18
 

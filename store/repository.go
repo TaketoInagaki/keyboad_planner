@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/TaketoInagaki/keyboad_planner/clock"
-	"github.com/TaketoInagaki/keyboad_planner/config"
+	"github.com/TaketoInagaki/keyboard_planner/clock"
+	"github.com/TaketoInagaki/keyboard_planner/config"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
-	"github.com/TaketoInagaki/keyboad_planner/store"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/store"
 	"golang.org/x/crypto/bcrypt"
 )
 

@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
 func (r *Repository) AddTask(

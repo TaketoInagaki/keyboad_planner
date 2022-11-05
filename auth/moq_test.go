@@ -5,7 +5,7 @@ package auth
 
 import (
 	"context"
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 	"sync"
 )
 

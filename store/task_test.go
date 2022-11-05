@@ -5,10 +5,10 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/TaketoInagaki/keyboad_planner/clock"
-	"github.com/TaketoInagaki/keyboad_planner/entity"
-	"github.com/TaketoInagaki/keyboad_planner/testutil"
-	"github.com/TaketoInagaki/keyboad_planner/testutil/fixture"
+	"github.com/TaketoInagaki/keyboard_planner/clock"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/testutil"
+	"github.com/TaketoInagaki/keyboard_planner/testutil/fixture"
 	"github.com/google/go-cmp/cmp"
 	"github.com/jmoiron/sqlx"
 )

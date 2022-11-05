@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/TaketoInagaki/keyboad_planner/auth"
+	"github.com/TaketoInagaki/keyboard_planner/auth"
 )
 
 func AdminMiddleware(next http.Handler) http.Handler {

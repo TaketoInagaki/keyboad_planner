@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/TaketoInagaki/keyboad_planner/auth"
-	"github.com/TaketoInagaki/keyboad_planner/entity"
-	"github.com/TaketoInagaki/keyboad_planner/store"
+	"github.com/TaketoInagaki/keyboard_planner/auth"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/store"
 )
 
 type CreateOrEditReflection struct {

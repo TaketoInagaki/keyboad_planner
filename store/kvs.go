@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/TaketoInagaki/keyboad_planner/config"
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/config"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 	"github.com/go-redis/redis/v8"
 )
 

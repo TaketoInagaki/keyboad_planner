@@ -3,7 +3,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
 type ListTask struct {

@@ -3,7 +3,7 @@
 
 DOCKER_TAG := latest
 build: ## Build docker image to deploy
-	docker build -t TaketoInagaki/keyboad_planner:${DOCKER_TAG} \
+	docker build -t TaketoInagaki/keyboard_planner:${DOCKER_TAG} \
 		--target deploy ./
 
 build-local: ## Build docker image to local development

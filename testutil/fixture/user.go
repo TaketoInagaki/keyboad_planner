@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
 func User(u *entity.User) *entity.User {

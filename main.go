@@ -7,7 +7,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/TaketoInagaki/keyboad_planner/config"
+	"github.com/TaketoInagaki/keyboard_planner/config"
 )
 
 func main() {

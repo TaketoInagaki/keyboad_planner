@@ -8,7 +8,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/TaketoInagaki/keyboad_planner/testutil"
+	"github.com/TaketoInagaki/keyboard_planner/testutil"
 	"github.com/go-playground/validator/v10"
 )
 

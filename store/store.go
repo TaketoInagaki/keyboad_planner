@@ -3,7 +3,7 @@ package store
 import (
 	"errors"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
 var (

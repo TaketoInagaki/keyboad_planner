@@ -4,12 +4,12 @@ import (
 	"context"
 	"testing"
 
-	"github.com/TaketoInagaki/keyboad_planner/auth"
+	"github.com/TaketoInagaki/keyboard_planner/auth"
 
 	"github.com/google/go-cmp/cmp"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
-	"github.com/TaketoInagaki/keyboad_planner/store"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/store"
 )
 
 func TestAddTask_AddTask(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/TaketoInagaki/keyboad_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 	"github.com/go-sql-driver/mysql"
 )
 

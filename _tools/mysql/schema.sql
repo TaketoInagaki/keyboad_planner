@@ -1,3 +1,7 @@
+drop database todo;
+
+create database todo;
+
 CREATE TABLE `user`
 (
     `id`       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ユーザーの識別子',

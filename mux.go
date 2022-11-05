@@ -4,12 +4,12 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/budougumi0617/go_todo_app/auth"
-	"github.com/budougumi0617/go_todo_app/clock"
-	"github.com/budougumi0617/go_todo_app/config"
-	"github.com/budougumi0617/go_todo_app/handler"
-	"github.com/budougumi0617/go_todo_app/service"
-	"github.com/budougumi0617/go_todo_app/store"
+	"github.com/TaketoInagaki/keyboad_planner/auth"
+	"github.com/TaketoInagaki/keyboad_planner/clock"
+	"github.com/TaketoInagaki/keyboad_planner/config"
+	"github.com/TaketoInagaki/keyboad_planner/handler"
+	"github.com/TaketoInagaki/keyboad_planner/service"
+	"github.com/TaketoInagaki/keyboad_planner/store"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
 )

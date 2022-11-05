@@ -7,7 +7,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/budougumi0617/go_todo_app/config"
+	"github.com/TaketoInagaki/keyboad_planner/config"
 )
 
 func main() {

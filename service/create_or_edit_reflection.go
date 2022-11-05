@@ -15,12 +15,7 @@ type CreateOrEditReflection struct {
 	Repo ReflectionCreator
 }
 
-func (a *CreateOrEditReflection) CreateOrEditReflection(
-	    ctx context.Context, content string,
-			contentType entity.ContentType, dateString string,
-			dateType entity.DateType,
-		) (*entity.Reflection, error,
-	) {
+func (a *CreateOrEditReflection) CreateOrEditReflection(ctx context.Context, content string, contentType entity.ContentType, dateString string, dateType entity.DateType) (*entity.Reflection, error) {
 	id, ok := auth.GetUserID(ctx)
 	if !ok {
 		return nil, fmt.Errorf("user_id not found")

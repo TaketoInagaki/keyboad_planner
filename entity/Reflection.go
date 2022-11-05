@@ -9,14 +9,14 @@ type DateType string
 const (
 	ContentTypeChech  ContentType = "Chech"
 	ContentTypeAction ContentType = "Action"
-	ContentTypeNote ContentType = "Note"
+	ContentTypeNote   ContentType = "Note"
 )
 
 const (
-	DateTypeDaily DateType = "Daily"
-	DateTypeWeekly DateType = "Weekly"
+	DateTypeDaily   DateType = "Daily"
+	DateTypeWeekly  DateType = "Weekly"
 	DateTypeMonthly DateType = "Monthly"
-	DateTypeYearly DateType = "Yearly"
+	DateTypeYearly  DateType = "Yearly"
 )
 
 type Reflection struct {

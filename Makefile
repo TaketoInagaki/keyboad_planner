@@ -10,7 +10,9 @@ build-local: ## Build docker image to local development
 	docker compose build --no-cache
 
 up: ## Do docker compose up with hot reload
-	docker compose up -d
+	docker compose up todo-db -d
+	docker compose up todo-redis -d
+	docker compose up app -d
 
 run: ## Do docker compose run --rm app /bin/bash
 	docker compose run --rm app /bin/bash

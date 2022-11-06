@@ -16,10 +16,11 @@ type CreateOrEditReflection struct {
 func (at *CreateOrEditReflection) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var body struct {
-		Content     string             `json:"content" validate:"required"`
-		ContentType entity.ContentType `json:"content_type" validate:"required"`
-		Date        string             `json:"date" validate:"required"`
-		DateType    entity.DateType    `json:"date_type" validate:"required"`
+		ID          entity.ReflectionID `json:"id"`
+		Content     string              `json:"content" validate:"required"`
+		ContentType entity.ContentType  `json:"content_type" validate:"required"`
+		Date        string              `json:"date" validate:"required"`
+		DateType    entity.DateType     `json:"date_type" validate:"required"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -33,7 +34,7 @@ func (at *CreateOrEditReflection) ServeHTTP(w http.ResponseWriter, r *http.Reque
 		}, http.StatusBadRequest)
 		return
 	}
-	t, err := at.Service.CreateOrEditReflection(ctx, body.Content, body.ContentType, body.Date , body.DateType)
+	t, err := at.Service.CreateOrEditReflection(ctx, body.ID, body.Content, body.ContentType, body.Date, body.DateType)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),

@@ -15,8 +15,8 @@ type CreateOrEditReflection struct {
 	Repo ReflectionCreator
 }
 
-func (a *CreateOrEditReflection) CreateOrEditReflection(ctx context.Context, content string, contentType entity.ContentType, dateString string, dateType entity.DateType) (*entity.Reflection, error) {
-	id, ok := auth.GetUserID(ctx)
+func (a *CreateOrEditReflection) CreateOrEditReflection(ctx context.Context, id entity.ReflectionID, content string, contentType entity.ContentType, dateString string, dateType entity.DateType) (*entity.Reflection, error) {
+	userId, ok := auth.GetUserID(ctx)
 	if !ok {
 		return nil, fmt.Errorf("user_id not found")
 	}
@@ -28,14 +28,21 @@ func (a *CreateOrEditReflection) CreateOrEditReflection(ctx context.Context, con
 	}
 
 	t := &entity.Reflection{
-		UserID:      id,
+		ID:          id,
+		UserID:      userId,
 		Content:     content,
 		ContentType: contentType,
 		Date:        date,
 		DateType:    dateType,
 	}
-	if err := a.Repo.CreateOrEditReflection(ctx, a.DB, t); err != nil {
-		return nil, fmt.Errorf("failed to register: %w", err)
+	if t.ID != 0 {
+		if err := a.Repo.EditReflection(ctx, a.DB, t); err != nil {
+			return nil, fmt.Errorf("failed to edit: %w", err)
+		}
+	} else {
+		if err := a.Repo.CreateReflection(ctx, a.DB, t); err != nil {
+			return nil, fmt.Errorf("failed to register: %w", err)
+		}
 	}
 	return t, nil
 }

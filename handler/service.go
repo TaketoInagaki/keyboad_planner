@@ -24,5 +24,5 @@ type LoginService interface {
 }
 
 type CreateOrEditReflectionService interface {
-	CreateOrEditReflection(ctx context.Context, content string, contentType entity.ContentType, date string, dateType entity.DateType) (*entity.Reflection, error)
+	CreateOrEditReflection(ctx context.Context, id entity.ReflectionID, content string, contentType entity.ContentType, date string, dateType entity.DateType) (*entity.Reflection, error)
 }

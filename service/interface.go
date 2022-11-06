@@ -27,5 +27,6 @@ type TokenGenerator interface {
 }
 
 type ReflectionCreator interface {
-	CreateOrEditReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
+	EditReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
+	CreateReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
 }

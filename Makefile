@@ -3,14 +3,16 @@
 
 DOCKER_TAG := latest
 build: ## Build docker image to deploy
-	docker build -t budougumi0617/gotodo:${DOCKER_TAG} \
+	docker build -t TaketoInagaki/keyboard_planner:${DOCKER_TAG} \
 		--target deploy ./
 
 build-local: ## Build docker image to local development
 	docker compose build --no-cache
 
 up: ## Do docker compose up with hot reload
-	docker compose up -d
+	docker compose up todo-db -d
+	docker compose up todo-redis -d
+	docker compose up app -d
 
 run: ## Do docker compose run --rm app /bin/bash
 	docker compose run --rm app /bin/bash

@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 
-	"github.com/budougumi0617/go_todo_app/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
 func (r *Repository) AddTask(

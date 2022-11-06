@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/budougumi0617/go_todo_app/entity"
-	"github.com/budougumi0617/go_todo_app/store"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/store"
 )
 
 //go:generate go run github.com/matryer/moq -out moq_test.go . TaskAdder TaskLister UserRegister UserGetter TokenGenerator
@@ -24,4 +24,9 @@ type UserGetter interface {
 
 type TokenGenerator interface {
 	GenerateToken(ctx context.Context, u entity.User) ([]byte, error)
+}
+
+type ReflectionCreator interface {
+	EditReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
+	CreateReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
 }

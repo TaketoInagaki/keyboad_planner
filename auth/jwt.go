@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/budougumi0617/go_todo_app/clock"
-	"github.com/budougumi0617/go_todo_app/entity"
+	"github.com/TaketoInagaki/keyboard_planner/clock"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 	"github.com/google/uuid"
 	"github.com/lestrrat-go/jwx/v2/jwa"
 	"github.com/lestrrat-go/jwx/v2/jwk"
@@ -65,7 +65,7 @@ func parse(rawKey []byte) (jwk.Key, error) {
 func (j *JWTer) GenerateToken(ctx context.Context, u entity.User) ([]byte, error) {
 	tok, err := jwt.NewBuilder().
 		JwtID(uuid.New().String()).
-		Issuer(`github.com/budougumi0617/go_todo_app`).
+		Issuer(`github.com/TaketoInagaki/keyboard_planner`).
 		Subject("access_token").
 		IssuedAt(j.Clocker.Now()).
 		// redisのexpireはこれを使う。

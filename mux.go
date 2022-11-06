@@ -4,12 +4,12 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/budougumi0617/go_todo_app/auth"
-	"github.com/budougumi0617/go_todo_app/clock"
-	"github.com/budougumi0617/go_todo_app/config"
-	"github.com/budougumi0617/go_todo_app/handler"
-	"github.com/budougumi0617/go_todo_app/service"
-	"github.com/budougumi0617/go_todo_app/store"
+	"github.com/TaketoInagaki/keyboard_planner/auth"
+	"github.com/TaketoInagaki/keyboard_planner/clock"
+	"github.com/TaketoInagaki/keyboard_planner/config"
+	"github.com/TaketoInagaki/keyboard_planner/handler"
+	"github.com/TaketoInagaki/keyboard_planner/service"
+	"github.com/TaketoInagaki/keyboard_planner/store"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator/v10"
 )
@@ -31,6 +31,8 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	if err != nil {
 		return nil, cleanup, err
 	}
+
+	// 認証認可系
 	jwter, err := auth.NewJWTer(rcli, clocker)
 	if err != nil {
 		return nil, cleanup, err
@@ -49,6 +51,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Validator: v,
 	}
 	mux.Post("/login", l.ServeHTTP)
+	mux.Route("/admin", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter), handler.AdminMiddleware)
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/json; charset=utf-8")
+			_, _ = w.Write([]byte(`{"message": "admin only"}`))
+		})
+	})
+
+	// タスク系
 	at := &handler.AddTask{
 		Service:   &service.AddTask{DB: db, Repo: &r},
 		Validator: v,
@@ -61,12 +72,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Post("/", at.ServeHTTP)
 		r.Get("/", lt.ServeHTTP)
 	})
-	mux.Route("/admin", func(r chi.Router) {
-		r.Use(handler.AuthMiddleware(jwter), handler.AdminMiddleware)
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Content-Type", "application/json; charset=utf-8")
-			_, _ = w.Write([]byte(`{"message": "admin only"}`))
-		})
+
+	// 振り返り系API
+	cr := &handler.CreateOrEditReflection{
+		Service:   &service.CreateOrEditReflection{DB: db, Repo: &r},
+		Validator: v,
+	}
+	mux.Route("/reflection", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", cr.ServeHTTP)
 	})
 
 	return mux, cleanup, nil

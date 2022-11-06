@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"github.com/budougumi0617/go_todo_app/entity"
+	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
 //go:generate go run github.com/matryer/moq -out moq_test.go . ListTasksService AddTaskService RegisterUserService LoginService
@@ -21,4 +21,8 @@ type RegisterUserService interface {
 
 type LoginService interface {
 	Login(ctx context.Context, name, pw string) (string, error)
+}
+
+type CreateOrEditReflectionService interface {
+	CreateOrEditReflection(ctx context.Context, id entity.ReflectionID, content string, contentType entity.ContentType, date string, dateType entity.DateType) (*entity.Reflection, error)
 }

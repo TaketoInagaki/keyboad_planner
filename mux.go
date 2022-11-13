@@ -65,7 +65,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Validator: v,
 	}
 	lt := &handler.ListTask{
-		Service: &service.ListTask{DB: db, Repo: &r},
+		Service:   &service.ListTask{DB: db, Repo: &r},
 		Validator: v,
 	}
 	mux.Route("/tasks", func(r chi.Router) {

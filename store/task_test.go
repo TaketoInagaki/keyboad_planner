@@ -28,7 +28,7 @@ func prepareUser(ctx context.Context, t *testing.T, db Execer) entity.UserID {
 	return entity.UserID(id)
 }
 
-func prepareTasks(ctx context.Context, t *testing.T, con Execer) (entity.Tasks) {
+func prepareTasks(ctx context.Context, t *testing.T, con Execer) entity.Tasks {
 	t.Helper()
 	userID := prepareUser(ctx, t, con)
 	otherUserID := prepareUser(ctx, t, con)

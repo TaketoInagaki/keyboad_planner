@@ -14,8 +14,8 @@ type CreateOrEditReflection struct {
 }
 
 func (at *CreateOrEditReflection) ServeHTTP(
-		w http.ResponseWriter, r *http.Request,
-	) {
+	w http.ResponseWriter, r *http.Request,
+) {
 	ctx := r.Context()
 	var body struct {
 		ID          entity.ReflectionID `json:"id"`

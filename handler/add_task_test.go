@@ -50,7 +50,12 @@ func TestAddTask(t *testing.T) {
 			)
 
 			moq := &AddTaskServiceMock{}
-			moq.AddTaskFunc = func(ctx context.Context, title string) (*entity.Task, error) {
+			moq.CreateOrEditTaskFunc = func(
+				ctx context.Context, id entity.TaskID,
+				title string, date string,
+				dateType entity.TaskDateType,
+				weekNumber entity.WeekNumber,
+			) (*entity.Task, error) {
 				if tt.want.status == http.StatusOK {
 					return &entity.Task{ID: 1}, nil
 				}

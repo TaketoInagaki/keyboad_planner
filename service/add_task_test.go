@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/TaketoInagaki/keyboard_planner/auth"
 
@@ -12,15 +13,20 @@ import (
 	"github.com/TaketoInagaki/keyboard_planner/store"
 )
 
-func TestAddTask_AddTask(t *testing.T) {
+func TestCreateTask_CreateTask(t *testing.T) {
 	t.Parallel()
 
 	wantUID := entity.UserID(10)
 	wantTitle := "test title"
+	wantDate, _ := time.Parse("2006-01", "2022-11")
+	wantDateType := entity.TaskDateType("Monthly")
+	wantWeekNumber := entity.WeekNumber(3)
 	wantTask := &entity.Task{
-		UserID: wantUID,
-		Title:  wantTitle,
-		Status: entity.TaskStatusTodo,
+		UserID:     wantUID,
+		Title:      wantTitle,
+		Date:       wantDate,
+		DateType:   wantDateType,
+		WeekNumber: wantWeekNumber,
 	}
 	type TaskAdderMockParameter struct {
 		in  *entity.Task
@@ -45,10 +51,17 @@ func TestAddTask_AddTask(t *testing.T) {
 		t.Run(n, func(t *testing.T) {
 			t.Parallel()
 			ctx := auth.SetUserID(context.Background(), 10)
+			task := &entity.Task{
+				ID:         1,
+				Title:      tt.want.Title,
+				Date:       tt.want.Date,
+				DateType:   tt.want.DateType,
+				WeekNumber: tt.want.WeekNumber,
+			}
 
 			moqDB := &ExecerMock{}
-			moqRepo := &TaskAdderMock{}
-			moqRepo.AddTaskFunc = func(pctx context.Context, db store.Execer, task *entity.Task) error {
+			moqRepo := &TaskCreatorMock{}
+			moqRepo.CreateTaskFunc = func(pctx context.Context, db store.Execer, task *entity.Task) error {
 				if ctx != pctx {
 					t.Fatalf("not want context %v", pctx)
 				}
@@ -60,16 +73,28 @@ func TestAddTask_AddTask(t *testing.T) {
 				}
 				return tt.taprm.err
 			}
-			a := &AddTask{
+			a := &CreateTask{
 				DB:   moqDB,
 				Repo: moqRepo,
 			}
-			got, err := a.AddTask(ctx, tt.title)
-			if err != nil {
-				t.Fatalf("want no error, but got %v", err)
+			// Create
+			cgot, cerr := a.CreateOrEditTask(ctx, 0, task.Title,
+				"2022-11-11", task.DateType, task.WeekNumber)
+			if cerr != nil {
+				t.Fatalf("want no error, but got %v", cerr)
 				return
 			}
-			if d := cmp.Diff(got, tt.want); len(d) != 0 {
+			if d := cmp.Diff(cgot, tt.want); len(d) != 0 {
+				t.Errorf("differs: (-got +want)\n%s", d)
+			}
+			// Edit
+			egot, eerr := a.CreateOrEditTask(ctx, task.ID, task.Title,
+				"2022-11-11", task.DateType, task.WeekNumber)
+			if eerr != nil {
+				t.Fatalf("want no error, but got %v", eerr)
+				return
+			}
+			if d := cmp.Diff(egot, tt.want); len(d) != 0 {
 				t.Errorf("differs: (-got +want)\n%s", d)
 			}
 		})

@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/service"
 	"github.com/TaketoInagaki/keyboard_planner/testutil"
 )
 
@@ -17,20 +18,24 @@ func TestListTask(t *testing.T) {
 		rspFile string
 	}
 	tests := map[string]struct {
-		tasks []*entity.Task
+		tasks []service.Task
 		want  want
 	}{
 		"ok": {
-			tasks: []*entity.Task{
+			tasks: []service.Task{
 				{
-					ID:     1,
-					Title:  "test1",
-					Status: entity.TaskStatusTodo,
+					ID:         1,
+					Title:      "test1",
+					Date:       "2022",
+					DateType:   "Weekly",
+					WeekNumber: 3,
 				},
 				{
-					ID:     2,
-					Title:  "test2",
-					Status: entity.TaskStatusDone,
+					ID:         2,
+					Title:      "test2",
+					Date:       "2022-06",
+					DateType:   "Monthly",
+					WeekNumber: 0,
 				},
 			},
 			want: want{
@@ -39,7 +44,7 @@ func TestListTask(t *testing.T) {
 			},
 		},
 		"empty": {
-			tasks: []*entity.Task{},
+			tasks: []service.Task{},
 			want: want{
 				status:  http.StatusOK,
 				rspFile: "testdata/list_task/empty_rsp.json.golden",
@@ -55,7 +60,10 @@ func TestListTask(t *testing.T) {
 			r := httptest.NewRequest(http.MethodGet, "/tasks", nil)
 
 			moq := &ListTasksServiceMock{}
-			moq.ListTasksFunc = func(ctx context.Context) (entity.Tasks, error) {
+			moq.ListTasksFunc = func(
+				ctx context.Context, date string, dateType entity.TaskDateType,
+				weekNumber entity.WeekNumber,
+			) (service.Tasks, error) {
 				if tt.tasks != nil {
 					return tt.tasks, nil
 				}

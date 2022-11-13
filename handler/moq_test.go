@@ -6,6 +6,7 @@ package handler
 import (
 	"context"
 	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/service"
 	"sync"
 )
 
@@ -30,7 +31,10 @@ var _ ListTasksService = &ListTasksServiceMock{}
 // 	}
 type ListTasksServiceMock struct {
 	// ListTasksFunc mocks the ListTasks method.
-	ListTasksFunc func(ctx context.Context) (entity.Tasks, error)
+	ListTasksFunc func(
+		ctx context.Context, date string, dateType entity.TaskDateType,
+		weekNumber entity.WeekNumber,
+	) (service.Tasks, error)
 
 	// calls tracks calls to the methods.
 	calls struct {
@@ -44,7 +48,10 @@ type ListTasksServiceMock struct {
 }
 
 // ListTasks calls ListTasksFunc.
-func (mock *ListTasksServiceMock) ListTasks(ctx context.Context) (entity.Tasks, error) {
+func (mock *ListTasksServiceMock) ListTasks(
+		ctx context.Context, date string, dateType entity.TaskDateType,
+		weekNumber entity.WeekNumber,
+	) (service.Tasks, error) {
 	if mock.ListTasksFunc == nil {
 		panic("ListTasksServiceMock.ListTasksFunc: method is nil but ListTasksService.ListTasks was just called")
 	}
@@ -56,7 +63,7 @@ func (mock *ListTasksServiceMock) ListTasks(ctx context.Context) (entity.Tasks, 
 	mock.lockListTasks.Lock()
 	mock.calls.ListTasks = append(mock.calls.ListTasks, callInfo)
 	mock.lockListTasks.Unlock()
-	return mock.ListTasksFunc(ctx)
+	return mock.ListTasksFunc(ctx, date, dateType, weekNumber)
 }
 
 // ListTasksCalls gets all the calls that were made to ListTasks.
@@ -95,7 +102,13 @@ var _ AddTaskService = &AddTaskServiceMock{}
 // 	}
 type AddTaskServiceMock struct {
 	// AddTaskFunc mocks the AddTask method.
-	AddTaskFunc func(ctx context.Context, title string) (*entity.Task, error)
+	CreateOrEditTaskFunc func(
+		ctx context.Context,
+		id entity.TaskID,
+		title string, date string,
+		dateType entity.TaskDateType,
+		weekNumber entity.WeekNumber,
+	) (*entity.Task, error)
 
 	// calls tracks calls to the methods.
 	calls struct {
@@ -103,41 +116,66 @@ type AddTaskServiceMock struct {
 		AddTask []struct {
 			// Ctx is the ctx argument value.
 			Ctx context.Context
+			ID    entity.TaskID
 			// Title is the title argument value.
 			Title string
+			Date  string
+			DateType entity.TaskDateType
+			WeekNumber entity.WeekNumber
 		}
 	}
 	lockAddTask sync.RWMutex
 }
 
 // AddTask calls AddTaskFunc.
-func (mock *AddTaskServiceMock) AddTask(ctx context.Context, title string) (*entity.Task, error) {
-	if mock.AddTaskFunc == nil {
-		panic("AddTaskServiceMock.AddTaskFunc: method is nil but AddTaskService.AddTask was just called")
+func (mock *AddTaskServiceMock) CreateOrEditTask(
+		ctx context.Context, id entity.TaskID, title string,
+		date string, dateType entity.TaskDateType,
+		weekNumber entity.WeekNumber,
+	) (*entity.Task, error) {
+	if mock.CreateOrEditTaskFunc == nil {
+		panic("AddTaskServiceMock.CreateOrEditTaskFunc: method is nil but AddTaskService.CreateOrEditTask was just called")
 	}
 	callInfo := struct {
 		Ctx   context.Context
+		ID    entity.TaskID
 		Title string
+		Date  string
+		DateType entity.TaskDateType
+		WeekNumber entity.WeekNumber
 	}{
-		Ctx:   ctx,
-		Title: title,
+		Ctx:        ctx,
+		ID:         id,
+		Title:      title,
+		Date:       date,
+		DateType:   dateType,
+		WeekNumber: weekNumber,
+
 	}
 	mock.lockAddTask.Lock()
 	mock.calls.AddTask = append(mock.calls.AddTask, callInfo)
 	mock.lockAddTask.Unlock()
-	return mock.AddTaskFunc(ctx, title)
+	return mock.CreateOrEditTaskFunc(ctx, id, title, date, dateType, weekNumber)
 }
 
 // AddTaskCalls gets all the calls that were made to AddTask.
 // Check the length with:
 //     len(mockedAddTaskService.AddTaskCalls())
-func (mock *AddTaskServiceMock) AddTaskCalls() []struct {
+func (mock *AddTaskServiceMock) CreateOrEditTaskCalls() []struct {
 	Ctx   context.Context
+	ID    entity.TaskID
 	Title string
+	Date  string
+	DateType entity.TaskDateType
+	WeekNumber entity.WeekNumber
 } {
 	var calls []struct {
 		Ctx   context.Context
+		ID    entity.TaskID
 		Title string
+		Date  string
+		DateType entity.TaskDateType
+		WeekNumber entity.WeekNumber
 	}
 	mock.lockAddTask.RLock()
 	calls = mock.calls.AddTask

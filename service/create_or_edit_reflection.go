@@ -16,10 +16,10 @@ type CreateOrEditReflection struct {
 }
 
 func (a *CreateOrEditReflection) CreateOrEditReflection(
-		ctx context.Context, id entity.ReflectionID, content string,
-		contentType entity.ContentType, dateString string,
-		dateType entity.DateType, weekNumber entity.WeekNumber,
-	) (*entity.Reflection, error) {
+	ctx context.Context, id entity.ReflectionID, content string,
+	contentType entity.ContentType, dateString string,
+	dateType entity.DateType, weekNumber entity.WeekNumber,
+) (*entity.Reflection, error) {
 	userId, ok := auth.GetUserID(ctx)
 	if !ok {
 		return nil, fmt.Errorf("user_id not found")
@@ -53,8 +53,8 @@ func (a *CreateOrEditReflection) CreateOrEditReflection(
 }
 
 func convertToTimeReflection(
-		dateString string, dateType entity.DateType, weekNumber entity.WeekNumber,
-	) (*time.Time, error) {
+	dateString string, dateType entity.DateType, weekNumber entity.WeekNumber,
+) (*time.Time, error) {
 	// 日付をtime.Timeに変換する
 	var date time.Time
 	var err error

@@ -30,19 +30,19 @@ func (r *Repository) EditReflection(
 
 func (r *Repository) CreateReflection(
 	ctx context.Context, db Execer, ref *entity.Reflection,
-	) error {
-		ref.Created = r.Clocker.Now()
-		ref.Modified = r.Clocker.Now()
-		sql := `INSERT INTO reflection(
-			user_id, content, content_type, date,
-			date_type, week_number, created, modified
-		)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
-		result, err := db.ExecContext(
-			ctx, sql, ref.UserID, ref.Content, ref.ContentType,
-			ref.Date, ref.DateType, ref.WeekNumber, ref.Created, ref.Modified,
-		)
-		if err != nil {
+) error {
+	ref.Created = r.Clocker.Now()
+	ref.Modified = r.Clocker.Now()
+	sql := `INSERT INTO reflection(
+		user_id, content, content_type, date,
+		date_type, week_number, created, modified
+	)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+	result, err := db.ExecContext(
+		ctx, sql, ref.UserID, ref.Content, ref.ContentType,
+		ref.Date, ref.DateType, ref.WeekNumber, ref.Created, ref.Modified,
+	)
+	if err != nil {
 		return err
 	}
 	id, err := result.LastInsertId()

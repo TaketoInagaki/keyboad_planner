@@ -16,10 +16,10 @@ type CreateTask struct {
 }
 
 func (a *CreateTask) CreateOrEditTask(
-		ctx context.Context, id entity.TaskID, title string,
-		dateString string, dateType entity.TaskDateType,
-		weekNumber entity.WeekNumber,
-	) (*entity.Task, error) {
+	ctx context.Context, id entity.TaskID, title string,
+	dateString string, dateType entity.TaskDateType,
+	weekNumber entity.WeekNumber,
+) (*entity.Task, error) {
 	user_id, ok := auth.GetUserID(ctx)
 	if !ok {
 		return nil, fmt.Errorf("user_id not found")
@@ -52,8 +52,8 @@ func (a *CreateTask) CreateOrEditTask(
 }
 
 func convertToTimeTask(
-		dateString string, dateType entity.TaskDateType, weekNumber entity.WeekNumber,
-	) (*time.Time, error) {
+	dateString string, dateType entity.TaskDateType, weekNumber entity.WeekNumber,
+) (*time.Time, error) {
 	// 日付をtime.Timeに変換する
 	var date time.Time
 	var err error

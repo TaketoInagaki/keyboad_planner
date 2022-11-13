@@ -26,9 +26,9 @@ type Task struct {
 type Tasks []Task
 
 func (l *ListTask) ListTasks(
-		ctx context.Context, dateString string,
-		dateType entity.TaskDateType, weekNumber entity.WeekNumber,
-	) (Tasks, error) {
+	ctx context.Context, dateString string,
+	dateType entity.TaskDateType, weekNumber entity.WeekNumber,
+) (Tasks, error) {
 	user_id, ok := auth.GetUserID(ctx)
 	if !ok {
 		return nil, fmt.Errorf("user_id not found")

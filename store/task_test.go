@@ -37,28 +37,29 @@ func prepareTasks(ctx context.Context, t *testing.T, con Execer) entity.Tasks {
 	c := clock.FixedClocker{}
 	wants := entity.Tasks{
 		{
-			UserID: userID,
-			Title:  "want task 1", Date: monthlyDate,
-			DateType: entity.TaskDateType("Monthly"),
+			UserID:     userID,
+			Title:      "want task 1",
+			Date:       monthlyDate,
+			DateType:   entity.TaskDateType("Monthly"),
 			WeekNumber: entity.WeekNumber(0),
-			Created: c.Now(), Modified: c.Now(),
+			Created:    c.Now(), Modified: c.Now(),
 		},
 		{
-			UserID: userID,
-			Title:  "want task 2", Date: yearlyWeeklyDate,
-			DateType: entity.TaskDateType("Yearly"),
+			UserID:     userID,
+			Title:      "want task 2", Date: yearlyWeeklyDate,
+			DateType:   entity.TaskDateType("Yearly"),
 			WeekNumber: entity.WeekNumber(0),
-			Created: c.Now(), Modified: c.Now(),
+			Created:    c.Now(), Modified: c.Now(),
 		},
 	}
 	tasks := entity.Tasks{
 		wants[0],
 		{
-			UserID: otherUserID,
-			Title:  "not want task", Date: yearlyWeeklyDate,
-			DateType: entity.TaskDateType("Weekly"),
+			UserID:     otherUserID,
+			Title:      "not want task", Date: yearlyWeeklyDate,
+			DateType:   entity.TaskDateType("Weekly"),
 			WeekNumber: entity.WeekNumber(9),
-			Created: c.Now(), Modified: c.Now(),
+			Created:    c.Now(), Modified: c.Now(),
 		},
 		wants[1],
 	}

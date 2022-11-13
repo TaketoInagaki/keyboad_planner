@@ -16,11 +16,11 @@ type AddTask struct {
 func (at *AddTask) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	var b struct {
-		ID          entity.TaskID       `json:"id"`
-		Title       string              `json:"title" validate:"required"`
-		Date        string              `json:"date" validate:"required"`
-		DateType    entity.TaskDateType `json:"date_type" validate:"required"`
-		WeekNumber  entity.WeekNumber   `json:"week_number"`
+		ID         entity.TaskID       `json:"id"`
+		Title      string              `json:"title" validate:"required"`
+		Date       string              `json:"date" validate:"required"`
+		DateType   entity.TaskDateType `json:"date_type" validate:"required"`
+		WeekNumber entity.WeekNumber   `json:"week_number"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&b); err != nil {
 		RespondJSON(ctx, w, &ErrResponse{

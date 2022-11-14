@@ -10,16 +10,16 @@ import (
 //go:generate go run github.com/matryer/moq -out moq_test.go . ListTasksService AddTaskService RegisterUserService LoginService
 type ListTasksService interface {
 	ListTasks(
-			ctx context.Context, date string, dateType entity.TaskDateType,
-			weekNumber entity.WeekNumber,
-		) (service.Tasks, error)
+		ctx context.Context, date string, dateType entity.TaskDateType,
+		weekNumber entity.WeekNumber,
+	) (service.Tasks, error)
 }
 
 type AddTaskService interface {
 	CreateOrEditTask(
-			ctx context.Context, id entity.TaskID, title string,
-			date string, dateType entity.TaskDateType, weekNumber entity.WeekNumber,
-		) (*entity.Task, error)
+		ctx context.Context, id entity.TaskID, title string,
+		date string, dateType entity.TaskDateType, weekNumber entity.WeekNumber,
+	) (*entity.Task, error)
 }
 
 type RegisterUserService interface {
@@ -32,8 +32,8 @@ type LoginService interface {
 
 type CreateOrEditReflectionService interface {
 	CreateOrEditReflection(
-			ctx context.Context, id entity.ReflectionID, content string,
-			contentType entity.ContentType, date string,
-			dateType entity.DateType, weekNumber entity.WeekNumber,
-		) (*entity.Reflection, error)
+		ctx context.Context, id entity.ReflectionID, content string,
+		contentType entity.ContentType, date string,
+		dateType entity.DateType, weekNumber entity.WeekNumber,
+	) (*entity.Reflection, error)
 }

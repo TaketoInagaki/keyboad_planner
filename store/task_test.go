@@ -104,7 +104,7 @@ func TestRepository_ListTasks(t *testing.T) {
 		t.Fatal(err)
 	}
 	wants := prepareTasks(ctx, t, tx)
-	want  := &entity.Task{
+	want := &entity.Task{
 		UserID:     33,
 		Date:       monthlyDate,
 		WeekNumber: entity.WeekNumber(0),

@@ -59,10 +59,12 @@ func prepareTasks(ctx context.Context, t *testing.T, con Execer) entity.Tasks {
 		wants[0],
 		{
 			UserID:     otherUserID,
-			Title:      "not want task", Date: yearlyWeeklyDate,
+			Title:      "not want task",
+			Date:       yearlyWeeklyDate,
 			DateType:   entity.TaskDateType("Weekly"),
 			WeekNumber: entity.WeekNumber(9),
-			Created:    c.Now(), Modified: c.Now(),
+			Created:    c.Now(),
+			Modified:   c.Now(),
 		},
 		wants[1],
 	}

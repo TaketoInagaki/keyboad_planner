@@ -3,21 +3,23 @@ package entity
 import "time"
 
 type TaskID int64
-type TaskStatus string
+type TaskDateType string
 
 const (
-	TaskStatusTodo  TaskStatus = "todo"
-	TaskStatusDoing TaskStatus = "doing"
-	TaskStatusDone  TaskStatus = "done"
+	TaskDateTypeWeekly  TaskDateType = "Weekly"
+	TaskDateTypeMonthly TaskDateType = "Monthly"
+	TaskDateTypeYearly  TaskDateType = "Yearly"
 )
 
 type Task struct {
-	ID       TaskID     `json:"id" db:"id"`
-	UserID   UserID     `json:"user_id" db:"user_id"`
-	Title    string     `json:"title" db:"title"`
-	Status   TaskStatus `json:"status" db:"status"`
-	Created  time.Time  `json:"created" db:"created"`
-	Modified time.Time  `json:"modified" db:"modified"`
+	ID         TaskID       `json:"id" db:"id"`
+	UserID     UserID       `json:"user_id" db:"user_id"`
+	Title      string       `json:"title" db:"title"`
+	Date       time.Time    `json:"date" db:"date"`
+	DateType   TaskDateType `json:"date_type" db:"date_type"`
+	WeekNumber WeekNumber   `json:"week_number" db:"week_number"`
+	Created    time.Time    `json:"created" db:"created"`
+	Modified   time.Time    `json:"modified" db:"modified"`
 }
 
 type Tasks []*Task

@@ -9,6 +9,7 @@ import (
 func (r *Repository) EditReflection(
 	ctx context.Context, db Execer, ref *entity.Reflection,
 ) error {
+	// TODO: 指定したidのデータがない時にその旨を知らせる
 	ref.Modified = r.Clocker.Now()
 	sql := `UPDATE reflection SET
 		content = ?, modified = ?
@@ -34,12 +35,12 @@ func (r *Repository) CreateReflection(
 	ref.Modified = r.Clocker.Now()
 	sql := `INSERT INTO reflection(
 		user_id, content, content_type, date,
-		date_type, created, modified
-		)
-	VALUES (?, ?, ?, ?, ?, ?, ?)`
+		date_type, week_number, created, modified
+	)
+	VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 	result, err := db.ExecContext(
 		ctx, sql, ref.UserID, ref.Content, ref.ContentType,
-		ref.Date, ref.DateType, ref.Created, ref.Modified,
+		ref.Date, ref.DateType, ref.WeekNumber, ref.Created, ref.Modified,
 	)
 	if err != nil {
 		return err
@@ -59,7 +60,7 @@ func (r *Repository) FetchReflections(
 	sql := `SELECT
 				id, user_id, content,
 				content_type, date, date_type,
-				created, modified
+				week_number, created, modified
 			FROM reflection
 			WHERE user_id = ?;`
 	if err := db.SelectContext(ctx, &reflections, sql, id); err != nil {

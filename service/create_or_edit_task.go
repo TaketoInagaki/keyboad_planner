@@ -10,50 +10,49 @@ import (
 	"github.com/TaketoInagaki/keyboard_planner/store"
 )
 
-type CreateOrEditReflection struct {
+type CreateTask struct {
 	DB   store.Execer
-	Repo ReflectionCreator
+	Repo TaskCreator
 }
 
-func (a *CreateOrEditReflection) CreateOrEditReflection(
-	ctx context.Context, id entity.ReflectionID, content string,
-	contentType entity.ContentType, dateString string,
-	dateType entity.DateType, weekNumber entity.WeekNumber,
-) (*entity.Reflection, error) {
-	userId, ok := auth.GetUserID(ctx)
+func (a *CreateTask) CreateOrEditTask(
+	ctx context.Context, id entity.TaskID, title string,
+	dateString string, dateType entity.TaskDateType,
+	weekNumber entity.WeekNumber,
+) (*entity.Task, error) {
+	user_id, ok := auth.GetUserID(ctx)
 	if !ok {
 		return nil, fmt.Errorf("user_id not found")
 	}
-
-	// 日付をtime.Timeに変換する
-	date, err := convertToTimeReflection(dateString, dateType, weekNumber)
+	date, err := convertToTimeTask(dateString, dateType, weekNumber)
 	if err != nil {
 		return nil, err
 	}
-
-	ref := &entity.Reflection{
-		ID:          id,
-		UserID:      userId,
-		Content:     content,
-		ContentType: contentType,
-		Date:        *date,
-		DateType:    dateType,
-		WeekNumber:  weekNumber,
+	// storeに渡す値をまとめる
+	t := &entity.Task{
+		ID:         id,
+		UserID:     user_id,
+		Title:      title,
+		Date:       *date,
+		DateType:   dateType,
+		WeekNumber: weekNumber,
 	}
-	if ref.ID != 0 {
-		if err := a.Repo.EditReflection(ctx, a.DB, ref); err != nil {
+	// 保存or編集
+	if t.ID != 0 {
+		if err := a.Repo.EditTask(ctx, a.DB, t); err != nil {
 			return nil, fmt.Errorf("failed to edit: %w", err)
 		}
 	} else {
-		if err := a.Repo.CreateReflection(ctx, a.DB, ref); err != nil {
+		err := a.Repo.CreateTask(ctx, a.DB, t)
+		if err != nil {
 			return nil, fmt.Errorf("failed to register: %w", err)
 		}
 	}
-	return ref, nil
+	return t, nil
 }
 
-func convertToTimeReflection(
-	dateString string, dateType entity.DateType, weekNumber entity.WeekNumber,
+func convertToTimeTask(
+	dateString string, dateType entity.TaskDateType, weekNumber entity.WeekNumber,
 ) (*time.Time, error) {
 	// 日付をtime.Timeに変換する
 	var date time.Time
@@ -73,7 +72,7 @@ func convertToTimeReflection(
 			return nil, fmt.Errorf("when weekly week_number is required")
 		}
 	default:
-		return nil, fmt.Errorf("doesn't match any dateType")
+		return nil, fmt.Errorf("don't match any dateType")
 	}
 	return &date, nil
 }

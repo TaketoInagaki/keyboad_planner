@@ -5,6 +5,7 @@ import "time"
 type ReflectionID int64
 type ContentType string
 type DateType string
+type WeekNumber int16
 
 const (
 	ContentTypeChech  ContentType = "Chech"
@@ -26,6 +27,7 @@ type Reflection struct {
 	ContentType ContentType  `json:"status" db:"status"`
 	Date        time.Time    `json:"date" db:"date"`
 	DateType    DateType     `json:"date_type" db:"date_type"`
+	WeekNumber  WeekNumber   `json:"week_number" db:"week_number"`
 	Created     time.Time    `json:"created" db:"created"`
 	Modified    time.Time    `json:"modified" db:"modified"`
 }

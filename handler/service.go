@@ -4,15 +4,22 @@ import (
 	"context"
 
 	"github.com/TaketoInagaki/keyboard_planner/entity"
+	"github.com/TaketoInagaki/keyboard_planner/service"
 )
 
 //go:generate go run github.com/matryer/moq -out moq_test.go . ListTasksService AddTaskService RegisterUserService LoginService
 type ListTasksService interface {
-	ListTasks(ctx context.Context) (entity.Tasks, error)
+	ListTasks(
+		ctx context.Context, date string, dateType entity.TaskDateType,
+		weekNumber entity.WeekNumber,
+	) (service.Tasks, error)
 }
 
 type AddTaskService interface {
-	AddTask(ctx context.Context, title string) (*entity.Task, error)
+	CreateOrEditTask(
+		ctx context.Context, id entity.TaskID, title string,
+		date string, dateType entity.TaskDateType, weekNumber entity.WeekNumber,
+	) (*entity.Task, error)
 }
 
 type RegisterUserService interface {
@@ -24,5 +31,9 @@ type LoginService interface {
 }
 
 type CreateOrEditReflectionService interface {
-	CreateOrEditReflection(ctx context.Context, id entity.ReflectionID, content string, contentType entity.ContentType, date string, dateType entity.DateType) (*entity.Reflection, error)
+	CreateOrEditReflection(
+		ctx context.Context, id entity.ReflectionID, content string,
+		contentType entity.ContentType, date string,
+		dateType entity.DateType, weekNumber entity.WeekNumber,
+	) (*entity.Reflection, error)
 }

@@ -2,21 +2,46 @@ package store
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
 
-func (r *Repository) AddTask(
+func (r *Repository) EditTask(
 	ctx context.Context, db Execer, t *entity.Task,
 ) error {
+	// TODO: 指定したidのデータがない時にその旨を知らせる
+	t.Created = r.Clocker.Now()
+	t.Modified = r.Clocker.Now()
+	sql := `UPDATE task SET
+		title = ?, date = ?, modified = ?
+	WHERE id = ?`
+	result, err := db.ExecContext(
+		ctx, sql, t.Title, t.Date, t.Modified, t.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	t.ID = entity.TaskID(id)
+	return nil
+}
+
+func (r *Repository) CreateTask(
+	ctx context.Context, db Execer, t *entity.Task,
+) error {
+	fmt.Println(t.UserID, t.Date, t.WeekNumber)
 	t.Created = r.Clocker.Now()
 	t.Modified = r.Clocker.Now()
 	sql := `INSERT INTO task
-			(user_id, title, status, created, modified)
-	VALUES (?, ?, ?, ?, ?)`
+			(user_id, title, date, date_type, week_number, created, modified)
+	VALUES (?, ?, ?, ?, ?, ?, ?)`
 	result, err := db.ExecContext(
-		ctx, sql, t.UserID, t.Title, t.Status,
-		t.Created, t.Modified,
+		ctx, sql, t.UserID, t.Title, t.Date,
+		t.DateType, t.WeekNumber, t.Created, t.Modified,
 	)
 	if err != nil {
 		return err
@@ -30,15 +55,18 @@ func (r *Repository) AddTask(
 }
 
 func (r *Repository) ListTasks(
-	ctx context.Context, db Queryer, id entity.UserID,
+	ctx context.Context, db Queryer, t *entity.Task,
 ) (entity.Tasks, error) {
+	fmt.Println(t.UserID, t.Date, t.WeekNumber)
 	tasks := entity.Tasks{}
-	sql := `SELECT 
-				id, user_id, title,
-				status, created, modified 
+	sql := `SELECT
+				id, user_id, title, date, date_type,
+				week_number, created, modified
 			FROM task
-			WHERE user_id = ?;`
-	if err := db.SelectContext(ctx, &tasks, sql, id); err != nil {
+			WHERE user_id = ?
+				AND date = ?
+				AND week_number = ?;`
+	if err := db.SelectContext(ctx, &tasks, sql, t.UserID, t.Date, t.WeekNumber); err != nil {
 		return nil, err
 	}
 	return tasks, nil

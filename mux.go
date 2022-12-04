@@ -61,11 +61,12 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 
 	// タスク系
 	at := &handler.AddTask{
-		Service:   &service.AddTask{DB: db, Repo: &r},
+		Service:   &service.CreateTask{DB: db, Repo: &r},
 		Validator: v,
 	}
 	lt := &handler.ListTask{
-		Service: &service.ListTask{DB: db, Repo: &r},
+		Service:   &service.ListTask{DB: db, Repo: &r},
+		Validator: v,
 	}
 	mux.Route("/tasks", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))

@@ -33,7 +33,6 @@ func (r *Repository) EditTask(
 func (r *Repository) CreateTask(
 	ctx context.Context, db Execer, t *entity.Task,
 ) error {
-	fmt.Println(t.UserID, t.Date, t.WeekNumber)
 	t.Created = r.Clocker.Now()
 	t.Modified = r.Clocker.Now()
 	sql := `INSERT INTO task
@@ -57,7 +56,6 @@ func (r *Repository) CreateTask(
 func (r *Repository) ListTasks(
 	ctx context.Context, db Queryer, t *entity.Task,
 ) (entity.Tasks, error) {
-	fmt.Println(t.UserID, t.Date, t.WeekNumber)
 	tasks := entity.Tasks{}
 	sql := `SELECT
 				id, user_id, title, date, date_type,

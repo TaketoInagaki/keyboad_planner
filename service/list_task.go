@@ -38,17 +38,19 @@ func (l *ListTask) ListTasks(
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println(user_id, *date, weekNumber)
 	t := &entity.Task{
 		UserID:     user_id,
 		Date:       *date,
 		WeekNumber: weekNumber,
 	}
+
+	// storeを呼び出してデータを取得
 	ts, err := l.Repo.ListTasks(ctx, l.DB, t)
 	if err != nil {
 		return nil, fmt.Errorf("failed to list: %w", err)
 	}
 
+	// Taskを配列に整理する
 	tasks := []Task{}
 	for _, t := range ts {
 		dateString := convertToStringTask(t.Date, t.DateType)

@@ -2,45 +2,46 @@ version: "3.9"
 # ref: https://docs.docker.com/compose/compose-file
 services:
   app:
-    image: gotodo
+    image: goplanner
     build:
       args:
         - target=dev
     environment:
-      TODO_ENV: dev
+      PLANNER_ENV: dev
       PORT: 8080
-      TODO_DB_HOST: todo-db
-      TODO_DB_PORT: 3306
-      TODO_DB_USER: todo
-      TODO_DB_PASSWORD: todo
-      TODO_DB_NAME: todo
-      TODO_REDIS_HOST: todo-redis
-      TODO_REDIS_PORT: 6379
+      PLANNER_DB_HOST: planner-db
+      PLANNER_DB_PORT: 3306
+      PLANNER_DB_USER: planner
+      PLANNER_DB_PASSWORD: planner
+      PLANNER_DB_NAME: planner
+      PLANNER_REDIS_HOST: planner-redis
+      PLANNER_REDIS_PORT: 6379
     volumes:
       - .:/app
     ports:
       - "18000:8080"
-  todo-db:
+  planner-db:
     image: mysql:8.0.29
     platform: linux/amd64
-    container_name: todo-db
+    container_name: planner-db
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_USER: todo
-      MYSQL_PASSWORD: todo
-      MYSQL_DATABASE: todo
+      MYSQL_USER: planner
+      MYSQL_PASSWORD: planner
+      MYSQL_DATABASE: planner
     volumes:
-      - todo-db-data:/var/lib/mysql
+      - planner-db-data:/var/lib/mysql
       - $PWD/_tools/mysql/conf.d:/etc/mysql/conf.d:cached
     ports:
-      - "33306:3306"
-  todo-redis:
+      - "36306:3306"
+    command: mysqld --innodb_use_native_aio=0
+  planner-redis:
     image: "redis:latest"
-    container_name: todo-redis
+    container_name: planner-redis
     ports:
       - "36379:6379"
     volumes:
-      - todo-redis-data:/data
+      - planner-redis-data:/data
 volumes:
-  todo-db-data:
-  todo-redis-data:
+  planner-db-data:
+  planner-redis-data:

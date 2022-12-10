@@ -10,8 +10,8 @@ build-local: ## Build docker image to local development
 	docker compose build --no-cache
 
 up: ## Do docker compose up with hot reload
-	docker compose up todo-db -d
-	docker compose up todo-redis -d
+	docker compose up planner-db -d
+	docker compose up planner-redis -d
 	docker compose up app -d
 
 run: ## Do docker compose run --rm app /bin/bash
@@ -30,10 +30,10 @@ test: ## Execute tests
 	go test -race -shuffle=on ./...
 
 dry-migrate: ## Try migration
-	mysqldef -u todo -p todo -h 127.0.0.1 -P 33306 todo --dry-run < ./_tools/mysql/schema.sql
+	mysqldef -u planner -p planner -h 127.0.0.1 -P 36306 planner --dry-run < ./_tools/mysql/schema.sql
 
 migrate:  ## Execute migration
-	mysqldef -u todo -p todo -h 127.0.0.1 -P 33306 todo < ./_tools/mysql/schema.sql
+	mysqldef -u planner -p planner -h 127.0.0.1 -P 36306 planner < ./_tools/mysql/schema.sql
 
 generate: ## Generate codes
 	go generate ./...

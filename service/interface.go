@@ -31,3 +31,7 @@ type ReflectionCreator interface {
 	EditReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
 	CreateReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
 }
+
+type ReflectionFetcher interface {
+	FetchReflection(ctx context.Context, db store.Queryer, ref *entity.Reflection) (entity.Reflections, error)
+}

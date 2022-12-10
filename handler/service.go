@@ -37,3 +37,10 @@ type CreateOrEditReflectionService interface {
 		dateType entity.DateType, weekNumber entity.WeekNumber,
 	) (*entity.Reflection, error)
 }
+
+type FetchReflectionService interface {
+	FetchReflection(
+		ctx context.Context, date string, dateType entity.DateType,
+		weekNumber entity.WeekNumber,
+	) (service.Reflections, error)
+}

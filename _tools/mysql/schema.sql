@@ -1,4 +1,4 @@
-CREATE TABLE todo.user
+CREATE TABLE planner.user
 (
     `id`       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'ユーザーの識別子',
     `name`     VARCHAR(20) NOT NULL COMMENT 'ユーザー名',
@@ -10,7 +10,7 @@ CREATE TABLE todo.user
     UNIQUE KEY `uix_name` (`name`) USING BTREE
 ) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='ユーザー';
 
-CREATE TABLE todo.task
+CREATE TABLE planner.task
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'タスクの識別子',
     `user_id`     BIGINT UNSIGNED NOT NULL COMMENT 'タスクを作成したユーザーの識別子',
@@ -26,7 +26,7 @@ CREATE TABLE todo.task
             ON DELETE RESTRICT ON UPDATE RESTRICT
 ) Engine=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='タスク';
 
-CREATE TABLE todo.reflection
+CREATE TABLE planner.reflection
 (
     `id`           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '振り返りの識別子',
     `user_id`      BIGINT UNSIGNED NOT NULL COMMENT '振り返りを作成したユーザーの識別子',

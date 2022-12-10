@@ -36,7 +36,7 @@ func (r *Repository) GetUser(
 ) (*entity.User, error) {
 	u := &entity.User{}
 	sql := `SELECT
-		id, name, password, role, created, modified 
+		id, name, password, role, created, modified
 		FROM user WHERE name = ?`
 	if err := db.GetContext(ctx, u, sql, name); err != nil {
 		return nil, err

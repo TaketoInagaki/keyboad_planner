@@ -72,6 +72,11 @@ func convertToTimeReflection(
 		if dateType == "Weekly" && weekNumber == 0 {
 			return nil, fmt.Errorf("when weekly week_number is required")
 		}
+	case "Daily":
+		date, err = time.Parse("2006-01-02", dateString)
+		if err != nil {
+			return nil, fmt.Errorf("cannot convert dateString to time.Time")
+		}
 	default:
 		return nil, fmt.Errorf("doesn't match any dateType")
 	}

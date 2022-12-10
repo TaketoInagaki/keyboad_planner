@@ -79,9 +79,14 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.CreateOrEditReflection{DB: db, Repo: &r},
 		Validator: v,
 	}
+	fr := &handler.FetchReflection{
+		Service:   &service.FetchReflection{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/reflection", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cr.ServeHTTP)
+		r.Get("/", fr.ServeHTTP)
 	})
 
 	return mux, cleanup, nil

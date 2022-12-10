@@ -53,8 +53,8 @@ func (r *Repository) CreateReflection(
 	return nil
 }
 
-func (r *Repository) FetchReflections(
-	ctx context.Context, db Queryer, id entity.UserID,
+func (r *Repository) FetchReflection(
+	ctx context.Context, db Queryer, ref *entity.Reflection,
 ) (entity.Reflections, error) {
 	reflections := entity.Reflections{}
 	sql := `SELECT
@@ -62,8 +62,10 @@ func (r *Repository) FetchReflections(
 				content_type, date, date_type,
 				week_number, created, modified
 			FROM reflection
-			WHERE user_id = ?;`
-	if err := db.SelectContext(ctx, &reflections, sql, id); err != nil {
+			WHERE user_id = ?
+				AND date = ?
+				AND week_number = ?;`
+	if err := db.SelectContext(ctx, &reflections, sql, ref.UserID, ref.Date, ref.WeekNumber); err != nil {
 		return nil, err
 	}
 	return reflections, nil

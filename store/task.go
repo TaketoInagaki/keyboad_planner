@@ -2,7 +2,6 @@ package store
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/TaketoInagaki/keyboard_planner/entity"
 )

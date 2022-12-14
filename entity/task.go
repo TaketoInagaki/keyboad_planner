@@ -18,6 +18,7 @@ type Task struct {
 	Date       time.Time    `json:"date" db:"date"`
 	DateType   TaskDateType `json:"date_type" db:"date_type"`
 	WeekNumber WeekNumber   `json:"week_number" db:"week_number"`
+	DeleteFlg  DeleteFlg    `json:"delete_flg" db:"delete_flg"`
 	Created    time.Time    `json:"created" db:"created"`
 	Modified   time.Time    `json:"modified" db:"modified"`
 }

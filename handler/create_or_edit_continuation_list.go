@@ -8,22 +8,19 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type CreateOrEditReflection struct {
-	Service   CreateOrEditReflectionService
+type CreateOrEditContinuationList struct {
+	Service   CreateOrEditContinuationService
 	Validator *validator.Validate
 }
 
-func (at *CreateOrEditReflection) ServeHTTP(
+func (at *CreateOrEditContinuationList) ServeHTTP(
 	w http.ResponseWriter, r *http.Request,
 ) {
 	ctx := r.Context()
 	var body struct {
-		ID             entity.ReflectionID   `json:"id"`
-		Content        string                `json:"content" validate:"required"`
-		ReflectionType entity.ReflectionType `json:"content_type" validate:"required"`
-		Date           string                `json:"date" validate:"required"`
-		DateType       entity.DateType       `json:"date_type" validate:"required"`
-		WeekNumber     entity.WeekNumber     `json:"week_number"`
+		ID               entity.ContinuationID   `json:"id"`
+		Content          string                  `json:"content" validate:"required"`
+		ContinuationType entity.ContinuationType `json:"content_type" validate:"required"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -37,9 +34,8 @@ func (at *CreateOrEditReflection) ServeHTTP(
 		}, http.StatusBadRequest)
 		return
 	}
-	t, err := at.Service.CreateOrEditReflection(
-		ctx, body.ID, body.Content, body.ReflectionType,
-		body.Date, body.DateType, body.WeekNumber,
+	t, err := at.Service.CreateOrEditContinuationList(
+		ctx, body.ID, body.Content, body.ContinuationType,
 	)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -48,7 +44,7 @@ func (at *CreateOrEditReflection) ServeHTTP(
 		return
 	}
 	rsp := struct {
-		ID entity.ReflectionID `json:"id"`
+		ID entity.ContinuationID `json:"id"`
 	}{ID: t.ID}
 	RespondJSON(ctx, w, rsp, http.StatusOK)
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type FetchContinuationList struct {
-	Service   FetchContinuationService
+	Service FetchContinuationService
 }
 
 func (fc *FetchContinuationList) ServeHTTP(w http.ResponseWriter, r *http.Request) {

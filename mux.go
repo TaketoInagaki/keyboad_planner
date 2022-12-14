@@ -95,7 +95,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Validator: v,
 	}
 	fc := &handler.FetchContinuationList{
-		Service:   &service.FetchContinuationList{DB: db, Repo: &r},
+		Service: &service.FetchContinuationList{DB: db, Repo: &r},
 	}
 	mux.Route("/continuation", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))

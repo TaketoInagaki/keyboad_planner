@@ -20,6 +20,9 @@ run: ## Do docker compose run --rm app /bin/bash
 down: ## Do docker compose down
 	docker compose down
 
+down-v: ## Do docker compose down
+	docker compose down -v
+
 logs: ## Tail docker compose logs
 	docker compose logs -f
 

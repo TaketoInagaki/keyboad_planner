@@ -16,12 +16,12 @@ type FetchReflection struct {
 }
 
 type Reflection struct {
-	ID          entity.ReflectionID `json:"id"`
-	Content     string              `json:"content"`
-	ContentType entity.ContentType  `json:"content_type"`
-	Date        string              `json:"date"`
-	DateType    entity.DateType     `json:"date_type"`
-	WeekNumber  entity.WeekNumber   `json:"week_number"`
+	ID             entity.ReflectionID   `json:"id"`
+	Content        string                `json:"content"`
+	ReflectionType entity.ReflectionType `json:"content_type"`
+	Date           string                `json:"date"`
+	DateType       entity.DateType       `json:"date_type"`
+	WeekNumber     entity.WeekNumber     `json:"week_number"`
 }
 
 type Reflections []Reflection
@@ -54,12 +54,12 @@ func (f *FetchReflection) FetchReflection(
 	for _, r := range rs {
 		dateString := convertToStringReflection(r.Date, r.DateType)
 		reflections = append(reflections, Reflection{
-			ID:          r.ID,
-			Content:     r.Content,
-			ContentType: r.ContentType,
-			Date:        *dateString,
-			DateType:    r.DateType,
-			WeekNumber:  r.WeekNumber,
+			ID:             r.ID,
+			Content:        r.Content,
+			ReflectionType: r.ReflectionType,
+			Date:           *dateString,
+			DateType:       r.DateType,
+			WeekNumber:     r.WeekNumber,
 		})
 	}
 

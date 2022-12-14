@@ -33,7 +33,7 @@ type LoginService interface {
 type CreateOrEditReflectionService interface {
 	CreateOrEditReflection(
 		ctx context.Context, id entity.ReflectionID, content string,
-		contentType entity.ContentType, date string,
+		contentType entity.ReflectionType, date string,
 		dateType entity.DateType, weekNumber entity.WeekNumber,
 	) (*entity.Reflection, error)
 }
@@ -43,4 +43,11 @@ type FetchReflectionService interface {
 		ctx context.Context, date string, dateType entity.DateType,
 		weekNumber entity.WeekNumber,
 	) (service.Reflections, error)
+}
+
+type CreateOrEditContinuationService interface {
+	CreateOrEditContinuationList(
+		ctx context.Context, id entity.ContinuationID, content string,
+		contentType entity.ContinuationType,
+	) (*entity.Continuation, error)
 }

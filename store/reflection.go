@@ -39,7 +39,7 @@ func (r *Repository) CreateReflection(
 	)
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 	result, err := db.ExecContext(
-		ctx, sql, ref.UserID, ref.Content, ref.ContentType,
+		ctx, sql, ref.UserID, ref.Content, ref.ReflectionType,
 		ref.Date, ref.DateType, ref.WeekNumber, ref.Created, ref.Modified,
 	)
 	if err != nil {

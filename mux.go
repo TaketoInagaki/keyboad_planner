@@ -89,5 +89,20 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Get("/", fr.ServeHTTP)
 	})
 
+	// 継続リスト系API
+	cc := &handler.CreateOrEditContinuationList{
+		Service:   &service.CreateOrEditContinuationList{DB: db, Repo: &r},
+		Validator: v,
+	}
+	// fc := &handler.FetchContinuationList{
+	// 	Service:   &service.FetchContinuationList{DB: db, Repo: &r},
+	// 	Validator: v,
+	// }
+	mux.Route("/continuation", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", cc.ServeHTTP)
+		// r.Get("/", fc.ServeHTTP)
+	})
+
 	return mux, cleanup, nil
 }

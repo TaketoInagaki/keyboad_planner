@@ -40,3 +40,7 @@ type ContinuationCreator interface {
 	EditContinuation(ctx context.Context, db store.Execer, t *entity.Continuation) error
 	CreateContinuation(ctx context.Context, db store.Execer, t *entity.Continuation) error
 }
+
+type ContinuationFetcher interface {
+	FetchContinuation(ctx context.Context, db store.Queryer, c *entity.Continuation) (entity.Continuations, error)
+}

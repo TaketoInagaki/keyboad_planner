@@ -52,16 +52,16 @@ func (r *Repository) CreateContinuation(
 }
 
 func (r *Repository) FetchContinuation(
-	ctx context.Context, db Queryer, con *entity.Continuation,
+	ctx context.Context, db Queryer, c *entity.Continuation,
 ) (entity.Continuations, error) {
-	reflections := entity.Continuations{}
+	continuations := entity.Continuations{}
 	sql := `SELECT
 				id, user_id, content,
 				content_type, created, modified
-			FROM reflection
+			FROM continuation
 			WHERE user_id = ?;`
-	if err := db.SelectContext(ctx, &reflections, sql, con.UserID); err != nil {
+	if err := db.SelectContext(ctx, &continuations, sql, c.UserID); err != nil {
 		return nil, err
 	}
-	return reflections, nil
+	return continuations, nil
 }

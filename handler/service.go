@@ -51,3 +51,7 @@ type CreateOrEditContinuationService interface {
 		contentType entity.ContinuationType,
 	) (*entity.Continuation, error)
 }
+
+type FetchContinuationService interface {
+	FetchContinuationList(ctx context.Context) (*service.Continuations, error)
+}

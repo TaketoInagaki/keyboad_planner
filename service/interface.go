@@ -28,8 +28,8 @@ type TokenGenerator interface {
 }
 
 type ReflectionCreator interface {
-	EditReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
-	CreateReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
+	EditReflection(ctx context.Context, db store.Execer, r *entity.Reflection) error
+	CreateReflection(ctx context.Context, db store.Execer, r *entity.Reflection) error
 }
 
 type ReflectionFetcher interface {
@@ -37,10 +37,15 @@ type ReflectionFetcher interface {
 }
 
 type ContinuationCreator interface {
-	EditContinuation(ctx context.Context, db store.Execer, t *entity.Continuation) error
-	CreateContinuation(ctx context.Context, db store.Execer, t *entity.Continuation) error
+	EditContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
+	CreateContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
 }
 
 type ContinuationFetcher interface {
 	FetchContinuation(ctx context.Context, db store.Queryer, c *entity.Continuation) (entity.Continuations, error)
+}
+
+type WishCreator interface {
+	EditWish(ctx context.Context, db store.Execer, w *entity.Wish) error
+	CreateWish(ctx context.Context, db store.Execer, w *entity.Wish) error
 }

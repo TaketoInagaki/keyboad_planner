@@ -103,5 +103,19 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Get("/", fc.ServeHTTP)
 	})
 
+	// やりたいことリスト系API
+	cw := &handler.CreateOrEditWishList{
+		Service:   &service.CreateOrEditWishList{DB: db, Repo: &r},
+		Validator: v,
+	}
+	// fw := &handler.FetchWishList{
+	// 	Service: &service.FetchWishList{DB: db, Repo: &r},
+	// }
+	mux.Route("/wish", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", cw.ServeHTTP)
+		// r.Get("/", fw.ServeHTTP)
+	})
+
 	return mux, cleanup, nil
 }

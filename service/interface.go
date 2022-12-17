@@ -49,3 +49,7 @@ type WishCreator interface {
 	EditWish(ctx context.Context, db store.Execer, w *entity.Wish) error
 	CreateWish(ctx context.Context, db store.Execer, w *entity.Wish) error
 }
+
+type WishFetcher interface {
+	FetchWish(ctx context.Context, db store.Queryer, w *entity.Wish) (entity.Wishes, error)
+}

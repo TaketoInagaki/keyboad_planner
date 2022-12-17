@@ -14,4 +14,4 @@ type Wish struct {
 	Modified  time.Time `json:"modified" db:"modified"`
 }
 
-type Wishs []*Wish
+type Wishes []*Wish

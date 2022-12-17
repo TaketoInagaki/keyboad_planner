@@ -55,3 +55,9 @@ type CreateOrEditContinuationService interface {
 type FetchContinuationService interface {
 	FetchContinuationList(ctx context.Context) (*service.Continuations, error)
 }
+
+type CreateOrEditWishService interface {
+	CreateOrEditWishList(
+		ctx context.Context, id entity.WishID, content string,
+	) (*entity.Wish, error)
+}

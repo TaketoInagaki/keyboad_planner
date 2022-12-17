@@ -31,7 +31,6 @@ CREATE TABLE planner.user (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -52,7 +51,6 @@ CREATE TABLE planner.user (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -73,7 +71,6 @@ CREATE TABLE planner.user (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 /* タスク */
 CREATE TABLE planner.task (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'タスクの識別子',
@@ -113,7 +110,6 @@ CREATE TABLE planner.task (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -138,7 +134,6 @@ CREATE TABLE planner.task (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -163,7 +158,6 @@ CREATE TABLE planner.task (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 /* 振り返り */
 CREATE TABLE planner.reflection (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '振り返りの識別子',
@@ -206,7 +200,6 @@ CREATE TABLE planner.reflection (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -233,7 +226,6 @@ CREATE TABLE planner.reflection (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -260,7 +252,6 @@ CREATE TABLE planner.reflection (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 /* 継続リスト */
 CREATE TABLE planner.continuation (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '継続リストの識別子',
@@ -294,7 +285,6 @@ CREATE TABLE planner.continuation (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -315,7 +305,6 @@ CREATE TABLE planner.continuation (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
-
 -- INSERT INTO
 --     user(
 --         id,
@@ -336,3 +325,14 @@ CREATE TABLE planner.continuation (
 --         '2022-12-07 12:50:00.558124',
 --         '2022-12-07 12:50:00.558124'
 --     );
+/* やりたいことリスト */
+CREATE TABLE planner.wish (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'やりたいことリストの識別子',
+    `user_id` BIGINT UNSIGNED NOT NULL COMMENT 'やりたいことリストを作成したユーザーの識別子',
+    `content` VARCHAR(255) NOT NULL COMMENT 'やりたいことリスト内容',
+    `delete_flg` INT(4) NOT NULL default(0) COMMENT '削除フラグ',
+    `created` DATETIME(6) NOT NULL COMMENT 'レコード作成日時',
+    `modified` DATETIME(6) NOT NULL COMMENT 'レコード修正日時',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_wish_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) Engine = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT = 'やりたいことリスト';

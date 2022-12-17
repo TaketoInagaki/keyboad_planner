@@ -61,3 +61,7 @@ type CreateOrEditWishService interface {
 		ctx context.Context, id entity.WishID, content string,
 	) (*entity.Wish, error)
 }
+
+type FetchWishService interface {
+	FetchWishList(ctx context.Context) (service.Wishes, error)
+}

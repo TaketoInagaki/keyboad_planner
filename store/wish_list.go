@@ -52,15 +52,15 @@ func (r *Repository) CreateWish(
 }
 
 func (r *Repository) FetchWish(
-	ctx context.Context, db Queryer, c *entity.Wish,
-) (entity.Wishs, error) {
-	wishes := entity.Wishs{}
+	ctx context.Context, db Queryer, w *entity.Wish,
+) (entity.Wishes, error) {
+	wishes := entity.Wishes{}
 	sql := `SELECT
 				id, user_id, content,
 				created, modified
 			FROM wish
 			WHERE user_id = ?;`
-	if err := db.SelectContext(ctx, &wishes, sql, c.UserID); err != nil {
+	if err := db.SelectContext(ctx, &wishes, sql, w.UserID); err != nil {
 		return nil, err
 	}
 	return wishes, nil

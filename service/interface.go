@@ -55,6 +55,10 @@ type ActionCreator interface {
 	CreateAction(ctx context.Context, db store.Execer, r *entity.Action) error
 }
 
+type ActionFetcher interface {
+	FetchAction(ctx context.Context, db store.Queryer, ref *entity.Action) (entity.Actions, error)
+}
+
 type ContinuationCreator interface {
 	EditContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
 	CreateContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error

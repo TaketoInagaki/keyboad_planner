@@ -108,6 +108,20 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Post("/", cch.ServeHTTP)
 		r.Get("/", fch.ServeHTTP)
 	})
+	// action
+	ca := &handler.CreateOrEditAction{
+		Service:   &service.CreateOrEditAction{DB: db, Repo: &r},
+		Validator: v,
+	}
+	fa := &handler.FetchAction{
+		Service:   &service.FetchAction{DB: db, Repo: &r},
+		Validator: v,
+	}
+	mux.Route("/action", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", ca.ServeHTTP)
+		r.Get("/", fa.ServeHTTP)
+	})
 
 	// 継続リスト系API
 	cc := &handler.CreateOrEditContinuationList{

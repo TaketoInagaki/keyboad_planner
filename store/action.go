@@ -88,7 +88,8 @@ func (r *Repository) FetchAction(
 			FROM actionlist
 			WHERE user_id = ?
 				AND date = ?
-				AND week_number = ?;`
+				AND week_number = ?
+				AND delete_flg = 0;`
 	if err := db.SelectContext(ctx, &checks, sql, c.UserID, c.Date, c.WeekNumber); err != nil {
 		return nil, err
 	}

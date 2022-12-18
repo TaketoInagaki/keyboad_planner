@@ -62,7 +62,8 @@ func (r *Repository) ListTasks(
 			FROM task
 			WHERE user_id = ?
 				AND date = ?
-				AND week_number = ?;`
+				AND week_number = ?
+				AND delete_flg = 0;`
 	if err := db.SelectContext(ctx, &tasks, sql, t.UserID, t.Date, t.WeekNumber); err != nil {
 		return nil, err
 	}

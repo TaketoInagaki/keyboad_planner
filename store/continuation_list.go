@@ -59,9 +59,31 @@ func (r *Repository) FetchContinuation(
 				id, user_id, content,
 				content_type, created, modified
 			FROM continuation
-			WHERE user_id = ?;`
+			WHERE user_id = ?
+				AND delete_flg = 0;`
 	if err := db.SelectContext(ctx, &continuations, sql, c.UserID); err != nil {
 		return nil, err
 	}
 	return continuations, nil
+}
+
+func (r *Repository) DeleteContinuation(
+	ctx context.Context, db Execer, t *entity.Continuation,
+) error {
+	sql := `UPDATE continuation
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, t.UserID, t.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	t.ID = entity.ContinuationID(id)
+	return nil
 }

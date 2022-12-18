@@ -81,7 +81,8 @@ func (r *Repository) FetchReflection(
 			FROM reflection
 			WHERE user_id = ?
 				AND date = ?
-				AND week_number = ?;`
+				AND week_number = ?
+				AND delete_flg = 0;`
 	if err := db.SelectContext(ctx, &reflections, sql, ref.UserID, ref.Date, ref.WeekNumber); err != nil {
 		return nil, err
 	}

@@ -41,6 +41,11 @@ type ReflectionFetcher interface {
 	FetchReflection(ctx context.Context, db store.Queryer, ref *entity.Reflection) (entity.Reflections, error)
 }
 
+type CheckCreator interface {
+	EditCheck(ctx context.Context, db store.Execer, r *entity.Check) error
+	CreateCheck(ctx context.Context, db store.Execer, r *entity.Check) error
+}
+
 type ContinuationCreator interface {
 	EditContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
 	CreateContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error

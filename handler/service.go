@@ -50,6 +50,12 @@ type FetchReflectionService interface {
 	) (service.Reflections, error)
 }
 
+type CreateOrEditCheckService interface {
+	CreateOrEditCheck(
+		ctx context.Context, id entity.CheckID, content string,
+		date string, dateType entity.DateType, weekNumber entity.WeekNumber,
+	) (*entity.Check, error)
+}
 type CreateOrEditContinuationService interface {
 	CreateOrEditContinuationList(
 		ctx context.Context, id entity.ContinuationID, content string,

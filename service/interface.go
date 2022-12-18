@@ -51,12 +51,16 @@ type CheckFetcher interface {
 }
 
 type ActionCreator interface {
-	EditAction(ctx context.Context, db store.Execer, r *entity.Action) error
-	CreateAction(ctx context.Context, db store.Execer, r *entity.Action) error
+	EditAction(ctx context.Context, db store.Execer, a *entity.Action) error
+	CreateAction(ctx context.Context, db store.Execer, a *entity.Action) error
+}
+
+type ActionUpdater interface {
+	UpdateAction(ctx context.Context, db store.Execer, a *entity.Action) error
 }
 
 type ActionFetcher interface {
-	FetchAction(ctx context.Context, db store.Queryer, ref *entity.Action) (entity.Actions, error)
+	FetchAction(ctx context.Context, db store.Queryer, a *entity.Action) (entity.Actions, error)
 }
 
 type ContinuationCreator interface {

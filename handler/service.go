@@ -74,6 +74,12 @@ type CreateOrEditActionService interface {
 	) (*entity.Action, error)
 }
 
+type UpdateActionService interface {
+	UpdateAction(
+		ctx context.Context, id entity.ActionID, status entity.ActionStatus,
+	) (*entity.Action, error)
+}
+
 type FetchActionService interface {
 	FetchAction(
 		ctx context.Context, date string, dateType entity.DateType,

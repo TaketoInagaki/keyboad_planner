@@ -67,6 +67,13 @@ type FetchCheckService interface {
 	) (service.Checks, error)
 }
 
+type CreateOrEditActionService interface {
+	CreateOrEditAction(
+		ctx context.Context, id entity.ActionID, content string,
+		date string, dateType entity.DateType, weekNumber entity.WeekNumber,
+	) (*entity.Action, error)
+}
+
 // 継続リスト
 type CreateOrEditContinuationService interface {
 	CreateOrEditContinuationList(

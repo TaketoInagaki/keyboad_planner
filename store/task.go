@@ -29,6 +29,29 @@ func (r *Repository) EditTask(
 	return nil
 }
 
+func (r *Repository) UpdateTask(
+	ctx context.Context, db Execer, t *entity.Task,
+) error {
+	// TODO: 指定したidのデータがない時にその旨を知らせる
+	t.Modified = r.Clocker.Now()
+	sql := `UPDATE task SET
+		status = ?
+	WHERE user_id = ?
+		AND id = ?`
+	result, err := db.ExecContext(
+		ctx, sql, t.Status, t.UserID, t.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	t.ID = entity.TaskID(id)
+	return nil
+}
+
 func (r *Repository) CreateTask(
 	ctx context.Context, db Execer, t *entity.Task,
 ) error {
@@ -57,7 +80,7 @@ func (r *Repository) ListTasks(
 ) (entity.Tasks, error) {
 	tasks := entity.Tasks{}
 	sql := `SELECT
-				id, user_id, title, date, date_type,
+				id, user_id, title, status, date, date_type,
 				week_number, created, modified
 			FROM task
 			WHERE user_id = ?

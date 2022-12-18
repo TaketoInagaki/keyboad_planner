@@ -16,6 +16,7 @@ CREATE TABLE planner.task (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'タスクの識別子',
     `user_id` BIGINT UNSIGNED NOT NULL COMMENT 'タスクを作成したユーザーの識別子',
     `title` VARCHAR(128) NOT NULL COMMENT 'タスクのタイトル',
+    `status` INT(4) NOT NULL default(0) COMMENT 'タスクのステータス',
     `date` DATETIME(6) NOT NULL COMMENT 'タスク日程',
     `date_type` VARCHAR(20) NOT NULL COMMENT 'タスク日程の種類',
     `week_number` SMALLINT NOT NULL default(0) COMMENT 'タスクの週数',

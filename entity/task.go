@@ -15,6 +15,7 @@ type Task struct {
 	ID         TaskID       `json:"id" db:"id"`
 	UserID     UserID       `json:"user_id" db:"user_id"`
 	Title      string       `json:"title" db:"title"`
+	Status     ActionStatus `json:"status" db:"status"`
 	Date       time.Time    `json:"date" db:"date"`
 	DateType   TaskDateType `json:"date_type" db:"date_type"`
 	WeekNumber WeekNumber   `json:"week_number" db:"week_number"`

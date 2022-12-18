@@ -20,6 +20,10 @@ type TaskDeleter interface {
 	DeleteTask(ctx context.Context, db store.Execer, t *entity.Task) error
 }
 
+type TaskUpdater interface {
+	UpdateTask(ctx context.Context, db store.Execer, a *entity.Task) error
+}
+
 type UserRegister interface {
 	RegisterUser(ctx context.Context, db store.Execer, u *entity.User) error
 }

@@ -87,3 +87,24 @@ func (r *Repository) DeleteContinuation(
 	t.ID = entity.ContinuationID(id)
 	return nil
 }
+
+func (r *Repository) DeleteReflection(
+	ctx context.Context, db Execer, c *entity.Reflection,
+) error {
+	sql := `UPDATE reflection
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, c.UserID, c.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	c.ID = entity.ReflectionID(id)
+	return nil
+}

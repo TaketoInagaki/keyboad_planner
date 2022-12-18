@@ -41,6 +41,10 @@ type ReflectionFetcher interface {
 	FetchReflection(ctx context.Context, db store.Queryer, ref *entity.Reflection) (entity.Reflections, error)
 }
 
+type ReflectionDeleter interface {
+	DeleteReflection(ctx context.Context, db store.Execer, t *entity.Reflection) error
+}
+
 type CheckCreator interface {
 	EditCheck(ctx context.Context, db store.Execer, r *entity.Check) error
 	CreateCheck(ctx context.Context, db store.Execer, r *entity.Check) error

@@ -10,8 +10,8 @@ import (
 )
 
 type CreateOrEditCheck struct {
-	DB    store.Execer
-	Repo  CheckCreator
+	DB   store.Execer
+	Repo CheckCreator
 }
 
 func (a *CreateOrEditCheck) CreateOrEditCheck(

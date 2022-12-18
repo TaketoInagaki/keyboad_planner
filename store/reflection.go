@@ -43,7 +43,7 @@ func (r *Repository) CreateReflection(
 				WHERE user_id = ?
 					AND date = ?
 					AND week_number = ?;`
-	err := preDb.SelectContext(ctx, &reflections, preSql, ref.UserID, ref.Date, ref.WeekNumber)
+	preDb.SelectContext(ctx, &reflections, preSql, ref.UserID, ref.Date, ref.WeekNumber)
 	if len(reflections) >= 1 {
 		return fmt.Errorf("この日程の振り返りはすでに存在します")
 	}

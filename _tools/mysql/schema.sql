@@ -56,6 +56,22 @@ CREATE TABLE planner.checklist (
     CONSTRAINT `fk_check_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) Engine = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT = 'チェック';
 
+/* 振り返り */
+CREATE TABLE planner.actionlist (
+    `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'アクションの識別子',
+    `user_id` BIGINT UNSIGNED NOT NULL COMMENT 'アクションを作成したユーザーの識別子',
+    `content` VARCHAR(255) NOT NULL COMMENT 'アクション内容',
+    `status` INT(4) NOT NULL default(0) COMMENT 'アクションのステータス',
+    `date` DATETIME(6) NOT NULL COMMENT 'アクション日程',
+    `date_type` VARCHAR(20) NOT NULL COMMENT 'アクション日程の種類',
+    `week_number` SMALLINT NOT NULL default(0) COMMENT 'アクションの週数',
+    `delete_flg` INT(4) NOT NULL default(0) COMMENT '削除フラグ',
+    `created` DATETIME(6) NOT NULL COMMENT 'レコード作成日時',
+    `modified` DATETIME(6) NOT NULL COMMENT 'レコード修正日時',
+    PRIMARY KEY (`id`),
+    CONSTRAINT `fk_action_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) Engine = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT = 'アクション';
+
 /* 継続リスト */
 CREATE TABLE planner.continuation (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '継続リストの識別子',

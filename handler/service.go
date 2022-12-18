@@ -87,6 +87,12 @@ type FetchActionService interface {
 	) (service.Actions, error)
 }
 
+type DeleteActionService interface {
+	DeleteAction(
+		ctx context.Context, id entity.ActionID,
+	) (*entity.Action, error)
+}
+
 // 継続リスト
 type CreateOrEditContinuationService interface {
 	CreateOrEditContinuationList(

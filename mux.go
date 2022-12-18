@@ -121,11 +121,16 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.UpdateAction{DB: db, Repo: &r},
 		Validator: v,
 	}
+	da := &handler.DeleteAction{
+		Service:   &service.DeleteAction{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/action", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", ca.ServeHTTP)
 		r.Patch("/", ua.ServeHTTP)
 		r.Get("/", fa.ServeHTTP)
+		r.Delete("/", da.ServeHTTP)
 	})
 
 	// 継続リスト系API

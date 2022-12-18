@@ -63,6 +63,10 @@ type ActionFetcher interface {
 	FetchAction(ctx context.Context, db store.Queryer, a *entity.Action) (entity.Actions, error)
 }
 
+type ActionDeleter interface {
+	DeleteAction(ctx context.Context, db store.Execer, t *entity.Action) error
+}
+
 type ContinuationCreator interface {
 	EditContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
 	CreateContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error

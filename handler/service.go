@@ -8,6 +8,8 @@ import (
 )
 
 //go:generate go run github.com/matryer/moq -out moq_test.go . ListTasksService AddTaskService RegisterUserService LoginService
+
+// タスク
 type ListTasksService interface {
 	ListTasks(
 		ctx context.Context, date string, dateType entity.TaskDateType,
@@ -28,6 +30,7 @@ type DeleteTaskService interface {
 	) (*entity.Task, error)
 }
 
+// ユーザー
 type RegisterUserService interface {
 	RegisterUser(ctx context.Context, name, password, role string) (*entity.User, error)
 }
@@ -36,6 +39,7 @@ type LoginService interface {
 	Login(ctx context.Context, name, pw string) (string, error)
 }
 
+// 振り返り
 type CreateOrEditReflectionService interface {
 	CreateOrEditReflection(
 		ctx context.Context, id entity.ReflectionID, content string,
@@ -56,6 +60,14 @@ type CreateOrEditCheckService interface {
 		date string, dateType entity.DateType, weekNumber entity.WeekNumber,
 	) (*entity.Check, error)
 }
+type FetchCheckService interface {
+	FetchCheck(
+		ctx context.Context, date string, dateType entity.DateType,
+		weekNumber entity.WeekNumber,
+	) (service.Checks, error)
+}
+
+// 継続リスト
 type CreateOrEditContinuationService interface {
 	CreateOrEditContinuationList(
 		ctx context.Context, id entity.ContinuationID, content string,

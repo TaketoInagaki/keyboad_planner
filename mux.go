@@ -99,14 +99,14 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.CreateOrEditCheck{DB: db, Repo: &r},
 		Validator: v,
 	}
-	// fch := &handler.FetchCheck{
-	// 	Service:   &service.FetchCheck{DB: db, Repo: &r},
-	// 	Validator: v,
-	// }
+	fch := &handler.FetchCheck{
+		Service:   &service.FetchCheck{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/check", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cch.ServeHTTP)
-		// r.Get("/", fch.ServeHTTP)
+		r.Get("/", fch.ServeHTTP)
 	})
 
 	// 継続リスト系API

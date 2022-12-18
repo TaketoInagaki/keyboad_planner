@@ -46,6 +46,10 @@ type CheckCreator interface {
 	CreateCheck(ctx context.Context, db store.Execer, r *entity.Check) error
 }
 
+type CheckFetcher interface {
+	FetchCheck(ctx context.Context, db store.Queryer, ref *entity.Check) (entity.Checks, error)
+}
+
 type ContinuationCreator interface {
 	EditContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
 	CreateContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error

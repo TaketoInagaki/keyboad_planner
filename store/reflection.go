@@ -2,6 +2,7 @@ package store
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/TaketoInagaki/keyboard_planner/entity"
 )
@@ -29,10 +30,23 @@ func (r *Repository) EditReflection(
 }
 
 func (r *Repository) CreateReflection(
-	ctx context.Context, db Execer, ref *entity.Reflection,
+	ctx context.Context, db Execer, preDb Queryer, ref *entity.Reflection,
 ) error {
 	ref.Created = r.Clocker.Now()
 	ref.Modified = r.Clocker.Now()
+	reflections := entity.Reflections{}
+	preSql := `SELECT
+					id, user_id, content,
+					date, date_type,
+					week_number, created, modified
+				FROM reflection
+				WHERE user_id = ?
+					AND date = ?
+					AND week_number = ?;`
+	err := preDb.SelectContext(ctx, &reflections, preSql, ref.UserID, ref.Date, ref.WeekNumber)
+	if len(reflections) >= 1 {
+		return fmt.Errorf("この日程の振り返りはすでに存在します")
+	}
 	sql := `INSERT INTO reflection(
 		user_id, content, date,
 		date_type, week_number, created, modified

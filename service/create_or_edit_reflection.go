@@ -12,6 +12,7 @@ import (
 
 type CreateOrEditReflection struct {
 	DB   store.Execer
+	PreDB store.Queryer
 	Repo ReflectionCreator
 }
 
@@ -43,7 +44,7 @@ func (a *CreateOrEditReflection) CreateOrEditReflection(
 			return nil, fmt.Errorf("failed to edit: %w", err)
 		}
 	} else {
-		if err := a.Repo.CreateReflection(ctx, a.DB, ref); err != nil {
+		if err := a.Repo.CreateReflection(ctx, a.DB, a.PreDB, ref); err != nil {
 			return nil, fmt.Errorf("failed to register: %w", err)
 		}
 	}

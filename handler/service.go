@@ -111,6 +111,7 @@ type FetchContinuationService interface {
 	FetchContinuationList(ctx context.Context) (*service.Continuations, error)
 }
 
+// やりたいこと
 type CreateOrEditWishService interface {
 	CreateOrEditWishList(
 		ctx context.Context, id entity.WishID, content string,
@@ -119,4 +120,10 @@ type CreateOrEditWishService interface {
 
 type FetchWishService interface {
 	FetchWishList(ctx context.Context) (service.Wishes, error)
+}
+
+type DeleteWishService interface {
+	DeleteWish(
+		ctx context.Context, id entity.WishID,
+	) (*entity.Wish, error)
 }

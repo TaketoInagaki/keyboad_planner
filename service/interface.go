@@ -88,3 +88,7 @@ type WishCreator interface {
 type WishFetcher interface {
 	FetchWish(ctx context.Context, db store.Queryer, w *entity.Wish) (entity.Wishes, error)
 }
+
+type WishDeleter interface {
+	DeleteWish(ctx context.Context, db store.Execer, t *entity.Wish) error
+}

@@ -18,12 +18,11 @@ func (at *CreateOrEditReflection) ServeHTTP(
 ) {
 	ctx := r.Context()
 	var body struct {
-		ID             entity.ReflectionID   `json:"id"`
-		Content        string                `json:"content" validate:"required"`
-		ReflectionType entity.ReflectionType `json:"content_type" validate:"required"`
-		Date           string                `json:"date" validate:"required"`
-		DateType       entity.DateType       `json:"date_type" validate:"required"`
-		WeekNumber     entity.WeekNumber     `json:"week_number"`
+		ID         entity.ReflectionID `json:"id"`
+		Content    string              `json:"content" validate:"required"`
+		Date       string              `json:"date" validate:"required"`
+		DateType   entity.DateType     `json:"date_type" validate:"required"`
+		WeekNumber entity.WeekNumber   `json:"week_number"`
 	}
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
@@ -38,7 +37,7 @@ func (at *CreateOrEditReflection) ServeHTTP(
 		return
 	}
 	t, err := at.Service.CreateOrEditReflection(
-		ctx, body.ID, body.Content, body.ReflectionType,
+		ctx, body.ID, body.Content,
 		body.Date, body.DateType, body.WeekNumber,
 	)
 	if err != nil {

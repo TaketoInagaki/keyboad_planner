@@ -39,8 +39,7 @@ type LoginService interface {
 type CreateOrEditReflectionService interface {
 	CreateOrEditReflection(
 		ctx context.Context, id entity.ReflectionID, content string,
-		contentType entity.ReflectionType, date string,
-		dateType entity.DateType, weekNumber entity.WeekNumber,
+		date string, dateType entity.DateType, weekNumber entity.WeekNumber,
 	) (*entity.Reflection, error)
 }
 

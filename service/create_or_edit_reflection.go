@@ -16,8 +16,7 @@ type CreateOrEditReflection struct {
 }
 
 func (a *CreateOrEditReflection) CreateOrEditReflection(
-	ctx context.Context, id entity.ReflectionID, content string,
-	contentType entity.ReflectionType, dateString string,
+	ctx context.Context, id entity.ReflectionID, content string, dateString string,
 	dateType entity.DateType, weekNumber entity.WeekNumber,
 ) (*entity.Reflection, error) {
 	userId, ok := auth.GetUserID(ctx)
@@ -32,13 +31,12 @@ func (a *CreateOrEditReflection) CreateOrEditReflection(
 	}
 
 	ref := &entity.Reflection{
-		ID:             id,
-		UserID:         userId,
-		Content:        content,
-		ReflectionType: contentType,
-		Date:           *date,
-		DateType:       dateType,
-		WeekNumber:     weekNumber,
+		ID:         id,
+		UserID:     userId,
+		Content:    content,
+		Date:       *date,
+		DateType:   dateType,
+		WeekNumber: weekNumber,
 	}
 	if ref.ID != 0 {
 		if err := a.Repo.EditReflection(ctx, a.DB, ref); err != nil {

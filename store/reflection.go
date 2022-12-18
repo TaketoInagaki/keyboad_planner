@@ -34,13 +34,13 @@ func (r *Repository) CreateReflection(
 	ref.Created = r.Clocker.Now()
 	ref.Modified = r.Clocker.Now()
 	sql := `INSERT INTO reflection(
-		user_id, content, content_type, date,
+		user_id, content, date,
 		date_type, week_number, created, modified
 	)
-	VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+	VALUES (?, ?, ?, ?, ?, ?, ?)`
 	result, err := db.ExecContext(
-		ctx, sql, ref.UserID, ref.Content, ref.ReflectionType,
-		ref.Date, ref.DateType, ref.WeekNumber, ref.Created, ref.Modified,
+		ctx, sql, ref.UserID, ref.Content, ref.Date,
+		ref.DateType, ref.WeekNumber, ref.Created, ref.Modified,
 	)
 	if err != nil {
 		return err
@@ -59,7 +59,7 @@ func (r *Repository) FetchReflection(
 	reflections := entity.Reflections{}
 	sql := `SELECT
 				id, user_id, content,
-				content_type, date, date_type,
+				date, date_type,
 				week_number, created, modified
 			FROM reflection
 			WHERE user_id = ?

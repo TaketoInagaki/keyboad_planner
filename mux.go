@@ -68,6 +68,10 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.ListTask{DB: db, Repo: &r},
 		Validator: v,
 	}
+	ut := &handler.UpdateTask{
+		Service:   &service.UpdateTask{DB: db, Repo: &r},
+		Validator: v,
+	}
 	dt := &handler.DeleteTask{
 		Service:   &service.DeleteTask{DB: db, Repo: &r},
 		Validator: v,
@@ -77,6 +81,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Post("/", at.ServeHTTP)
 		r.Get("/", lt.ServeHTTP)
 		r.Delete("/", dt.ServeHTTP)
+		r.Patch("/", ut.ServeHTTP)
 	})
 
 	// 振り返り系API

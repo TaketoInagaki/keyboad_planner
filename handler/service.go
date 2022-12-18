@@ -30,6 +30,12 @@ type DeleteTaskService interface {
 	) (*entity.Task, error)
 }
 
+type UpdateTaskService interface {
+	UpdateTask(
+		ctx context.Context, id entity.TaskID, status entity.ActionStatus,
+	) (*entity.Task, error)
+}
+
 // ユーザー
 type RegisterUserService interface {
 	RegisterUser(ctx context.Context, name, password, role string) (*entity.User, error)

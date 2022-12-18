@@ -50,6 +50,10 @@ type CheckFetcher interface {
 	FetchCheck(ctx context.Context, db store.Queryer, ref *entity.Check) (entity.Checks, error)
 }
 
+type CheckDeleter interface {
+	DeleteCheck(ctx context.Context, db store.Execer, t *entity.Check) error
+}
+
 type ActionCreator interface {
 	EditAction(ctx context.Context, db store.Execer, a *entity.Action) error
 	CreateAction(ctx context.Context, db store.Execer, a *entity.Action) error

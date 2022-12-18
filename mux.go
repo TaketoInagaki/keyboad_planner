@@ -103,10 +103,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.FetchCheck{DB: db, Repo: &r},
 		Validator: v,
 	}
+	dc := &handler.DeleteCheck{
+		Service:   &service.DeleteCheck{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/check", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cch.ServeHTTP)
 		r.Get("/", fch.ServeHTTP)
+		r.Delete("/", dc.ServeHTTP)
 	})
 	// action
 	ca := &handler.CreateOrEditAction{

@@ -67,6 +67,12 @@ type FetchCheckService interface {
 	) (service.Checks, error)
 }
 
+type DeleteCheckService interface {
+	DeleteCheck(
+		ctx context.Context, id entity.CheckID,
+	) (*entity.Check, error)
+}
+
 type CreateOrEditActionService interface {
 	CreateOrEditAction(
 		ctx context.Context, id entity.ActionID, content string,

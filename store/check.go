@@ -70,3 +70,24 @@ func (r *Repository) FetchCheck(
 	}
 	return checks, nil
 }
+
+func (r *Repository) DeleteCheck(
+	ctx context.Context, db Execer, c *entity.Check,
+) error {
+	sql := `UPDATE checklist
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, c.UserID, c.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	c.ID = entity.CheckID(id)
+	return nil
+}

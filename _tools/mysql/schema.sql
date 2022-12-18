@@ -163,7 +163,6 @@ CREATE TABLE planner.reflection (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '振り返りの識別子',
     `user_id` BIGINT UNSIGNED NOT NULL COMMENT '振り返りを作成したユーザーの識別子',
     `content` VARCHAR(255) NOT NULL COMMENT '振り返り内容',
-    `content_type` VARCHAR(20) NOT NULL COMMENT '振り返りの種類',
     `date` DATETIME(6) NOT NULL COMMENT '振り返り日程',
     `date_type` VARCHAR(20) NOT NULL COMMENT '振り返り日程の種類',
     `week_number` SMALLINT NOT NULL default(0) COMMENT '振り返りの週数',

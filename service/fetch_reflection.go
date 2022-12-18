@@ -54,12 +54,11 @@ func (f *FetchReflection) FetchReflection(
 	for _, r := range rs {
 		dateString := convertToStringReflection(r.Date, r.DateType)
 		reflections = append(reflections, Reflection{
-			ID:             r.ID,
-			Content:        r.Content,
-			ReflectionType: r.ReflectionType,
-			Date:           *dateString,
-			DateType:       r.DateType,
-			WeekNumber:     r.WeekNumber,
+			ID:         r.ID,
+			Content:    r.Content,
+			Date:       *dateString,
+			DateType:   r.DateType,
+			WeekNumber: r.WeekNumber,
 		})
 	}
 

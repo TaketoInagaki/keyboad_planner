@@ -3,15 +3,8 @@ package entity
 import "time"
 
 type ReflectionID int64
-type ReflectionType string
 type DateType string
 type WeekNumber int16
-
-const (
-	ReflectionTypeChech  ReflectionType = "Chech"
-	ReflectionTypeAction ReflectionType = "Action"
-	ReflectionTypeNote   ReflectionType = "Note"
-)
 
 const (
 	DateTypeDaily   DateType = "Daily"

@@ -34,11 +34,20 @@ type TokenGenerator interface {
 
 type ReflectionCreator interface {
 	EditReflection(ctx context.Context, db store.Execer, r *entity.Reflection) error
-	CreateReflection(ctx context.Context, db store.Execer, r *entity.Reflection) error
+	CreateReflection(ctx context.Context, db store.Execer, preDb store.Queryer, r *entity.Reflection) error
 }
 
 type ReflectionFetcher interface {
 	FetchReflection(ctx context.Context, db store.Queryer, ref *entity.Reflection) (entity.Reflections, error)
+}
+
+type CheckCreator interface {
+	EditCheck(ctx context.Context, db store.Execer, r *entity.Check) error
+	CreateCheck(ctx context.Context, db store.Execer, r *entity.Check) error
+}
+
+type CheckFetcher interface {
+	FetchCheck(ctx context.Context, db store.Queryer, ref *entity.Check) (entity.Checks, error)
 }
 
 type ContinuationCreator interface {

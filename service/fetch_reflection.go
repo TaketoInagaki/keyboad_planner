@@ -16,12 +16,11 @@ type FetchReflection struct {
 }
 
 type Reflection struct {
-	ID             entity.ReflectionID   `json:"id"`
-	Content        string                `json:"content"`
-	ReflectionType entity.ReflectionType `json:"content_type"`
-	Date           string                `json:"date"`
-	DateType       entity.DateType       `json:"date_type"`
-	WeekNumber     entity.WeekNumber     `json:"week_number"`
+	ID         entity.ReflectionID `json:"id"`
+	Content    string              `json:"content"`
+	Date       string              `json:"date"`
+	DateType   entity.DateType     `json:"date_type"`
+	WeekNumber entity.WeekNumber   `json:"week_number"`
 }
 
 type Reflections []Reflection

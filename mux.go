@@ -80,8 +80,9 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	})
 
 	// 振り返り系API
+	// note
 	cr := &handler.CreateOrEditReflection{
-		Service:   &service.CreateOrEditReflection{DB: db, Repo: &r},
+		Service:   &service.CreateOrEditReflection{DB: db, PreDB: db, Repo: &r},
 		Validator: v,
 	}
 	fr := &handler.FetchReflection{
@@ -92,6 +93,20 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cr.ServeHTTP)
 		r.Get("/", fr.ServeHTTP)
+	})
+	// check
+	cch := &handler.CreateOrEditCheck{
+		Service:   &service.CreateOrEditCheck{DB: db, Repo: &r},
+		Validator: v,
+	}
+	fch := &handler.FetchCheck{
+		Service:   &service.FetchCheck{DB: db, Repo: &r},
+		Validator: v,
+	}
+	mux.Route("/check", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", cch.ServeHTTP)
+		r.Get("/", fch.ServeHTTP)
 	})
 
 	// 継続リスト系API

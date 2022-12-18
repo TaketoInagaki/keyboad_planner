@@ -68,10 +68,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.ListTask{DB: db, Repo: &r},
 		Validator: v,
 	}
+	dt := &handler.DeleteTask{
+		Service:   &service.DeleteTask{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/tasks", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", at.ServeHTTP)
 		r.Get("/", lt.ServeHTTP)
+		r.Delete("/", dt.ServeHTTP)
 	})
 
 	// 振り返り系API

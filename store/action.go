@@ -13,9 +13,33 @@ func (r *Repository) EditAction(
 	c.Modified = r.Clocker.Now()
 	sql := `UPDATE actionlist SET
 		content = ?, modified = ?
-	WHERE id = ?`
+	WHERE user_id = ?
+		AND id = ?`
 	result, err := db.ExecContext(
-		ctx, sql, c.Content, c.Modified, c.ID,
+		ctx, sql, c.Content, c.Modified, c.UserID, c.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	c.ID = entity.ActionID(id)
+	return nil
+}
+
+func (r *Repository) UpdateAction(
+	ctx context.Context, db Execer, c *entity.Action,
+) error {
+	// TODO: 指定したidのデータがない時にその旨を知らせる
+	c.Modified = r.Clocker.Now()
+	sql := `UPDATE actionlist SET
+		status = ?
+	WHERE user_id = ?
+		AND id = ?`
+	result, err := db.ExecContext(
+		ctx, sql, c.Status, c.UserID, c.ID,
 	)
 	if err != nil {
 		return err

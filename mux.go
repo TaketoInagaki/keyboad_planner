@@ -117,9 +117,14 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.FetchAction{DB: db, Repo: &r},
 		Validator: v,
 	}
+	ua := &handler.UpdateAction{
+		Service:   &service.UpdateAction{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/action", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", ca.ServeHTTP)
+		r.Patch("/", ua.ServeHTTP)
 		r.Get("/", fa.ServeHTTP)
 	})
 

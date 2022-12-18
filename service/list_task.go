@@ -18,6 +18,7 @@ type ListTask struct {
 type Task struct {
 	ID         entity.TaskID       `json:"id"`
 	Title      string              `json:"title"`
+	Status     entity.ActionStatus `json:"status"`
 	Date       string              `json:"date"`
 	DateType   entity.TaskDateType `json:"date_type"`
 	WeekNumber entity.WeekNumber   `json:"week_number"`
@@ -57,6 +58,7 @@ func (l *ListTask) ListTasks(
 		tasks = append(tasks, Task{
 			ID:         t.ID,
 			Title:      t.Title,
+			Status:     t.Status,
 			Date:       *dateString,
 			DateType:   t.DateType,
 			WeekNumber: t.WeekNumber,

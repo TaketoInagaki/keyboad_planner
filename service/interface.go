@@ -80,6 +80,10 @@ type ContinuationFetcher interface {
 	FetchContinuation(ctx context.Context, db store.Queryer, c *entity.Continuation) (entity.Continuations, error)
 }
 
+type ContinuationDeleter interface {
+	DeleteContinuation(ctx context.Context, db store.Execer, t *entity.Continuation) error
+}
+
 type WishCreator interface {
 	EditWish(ctx context.Context, db store.Execer, w *entity.Wish) error
 	CreateWish(ctx context.Context, db store.Execer, w *entity.Wish) error

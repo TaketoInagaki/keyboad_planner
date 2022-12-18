@@ -103,7 +103,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.FetchCheck{DB: db, Repo: &r},
 		Validator: v,
 	}
-	dc := &handler.DeleteCheck{
+	dch := &handler.DeleteCheck{
 		Service:   &service.DeleteCheck{DB: db, Repo: &r},
 		Validator: v,
 	}
@@ -111,7 +111,7 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cch.ServeHTTP)
 		r.Get("/", fch.ServeHTTP)
-		r.Delete("/", dc.ServeHTTP)
+		r.Delete("/", dch.ServeHTTP)
 	})
 	// action
 	ca := &handler.CreateOrEditAction{
@@ -146,10 +146,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	fc := &handler.FetchContinuationList{
 		Service: &service.FetchContinuationList{DB: db, Repo: &r},
 	}
+	dc := &handler.DeleteContinuation{
+		Service:   &service.DeleteContinuation{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/continuation", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cc.ServeHTTP)
 		r.Get("/", fc.ServeHTTP)
+		r.Delete("/", dc.ServeHTTP)
 	})
 
 	// やりたいことリスト系API

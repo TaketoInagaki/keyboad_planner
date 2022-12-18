@@ -94,3 +94,24 @@ func (r *Repository) FetchAction(
 	}
 	return checks, nil
 }
+
+func (r *Repository) DeleteAction(
+	ctx context.Context, db Execer, t *entity.Action,
+) error {
+	sql := `UPDATE actionlist
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, t.UserID, t.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	t.ID = entity.ActionID(id)
+	return nil
+}

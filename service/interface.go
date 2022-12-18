@@ -50,6 +50,10 @@ type CheckFetcher interface {
 	FetchCheck(ctx context.Context, db store.Queryer, ref *entity.Check) (entity.Checks, error)
 }
 
+type CheckDeleter interface {
+	DeleteCheck(ctx context.Context, db store.Execer, t *entity.Check) error
+}
+
 type ActionCreator interface {
 	EditAction(ctx context.Context, db store.Execer, a *entity.Action) error
 	CreateAction(ctx context.Context, db store.Execer, a *entity.Action) error
@@ -63,6 +67,10 @@ type ActionFetcher interface {
 	FetchAction(ctx context.Context, db store.Queryer, a *entity.Action) (entity.Actions, error)
 }
 
+type ActionDeleter interface {
+	DeleteAction(ctx context.Context, db store.Execer, t *entity.Action) error
+}
+
 type ContinuationCreator interface {
 	EditContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
 	CreateContinuation(ctx context.Context, db store.Execer, c *entity.Continuation) error
@@ -72,6 +80,10 @@ type ContinuationFetcher interface {
 	FetchContinuation(ctx context.Context, db store.Queryer, c *entity.Continuation) (entity.Continuations, error)
 }
 
+type ContinuationDeleter interface {
+	DeleteContinuation(ctx context.Context, db store.Execer, t *entity.Continuation) error
+}
+
 type WishCreator interface {
 	EditWish(ctx context.Context, db store.Execer, w *entity.Wish) error
 	CreateWish(ctx context.Context, db store.Execer, w *entity.Wish) error
@@ -79,4 +91,8 @@ type WishCreator interface {
 
 type WishFetcher interface {
 	FetchWish(ctx context.Context, db store.Queryer, w *entity.Wish) (entity.Wishes, error)
+}
+
+type WishDeleter interface {
+	DeleteWish(ctx context.Context, db store.Execer, t *entity.Wish) error
 }

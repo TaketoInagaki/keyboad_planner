@@ -67,6 +67,12 @@ type FetchCheckService interface {
 	) (service.Checks, error)
 }
 
+type DeleteCheckService interface {
+	DeleteCheck(
+		ctx context.Context, id entity.CheckID,
+	) (*entity.Check, error)
+}
+
 type CreateOrEditActionService interface {
 	CreateOrEditAction(
 		ctx context.Context, id entity.ActionID, content string,
@@ -87,6 +93,12 @@ type FetchActionService interface {
 	) (service.Actions, error)
 }
 
+type DeleteActionService interface {
+	DeleteAction(
+		ctx context.Context, id entity.ActionID,
+	) (*entity.Action, error)
+}
+
 // 継続リスト
 type CreateOrEditContinuationService interface {
 	CreateOrEditContinuationList(
@@ -99,6 +111,13 @@ type FetchContinuationService interface {
 	FetchContinuationList(ctx context.Context) (*service.Continuations, error)
 }
 
+type DeleteContinuationService interface {
+	DeleteContinuation(
+		ctx context.Context, id entity.ContinuationID,
+	) (*entity.Continuation, error)
+}
+
+// やりたいこと
 type CreateOrEditWishService interface {
 	CreateOrEditWishList(
 		ctx context.Context, id entity.WishID, content string,
@@ -107,4 +126,10 @@ type CreateOrEditWishService interface {
 
 type FetchWishService interface {
 	FetchWishList(ctx context.Context) (service.Wishes, error)
+}
+
+type DeleteWishService interface {
+	DeleteWish(
+		ctx context.Context, id entity.WishID,
+	) (*entity.Wish, error)
 }

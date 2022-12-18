@@ -65,3 +65,45 @@ func (r *Repository) FetchWish(
 	}
 	return wishes, nil
 }
+
+func (r *Repository) DeleteWish(
+	ctx context.Context, db Execer, c *entity.Wish,
+) error {
+	sql := `UPDATE wish
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, c.UserID, c.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	c.ID = entity.WishID(id)
+	return nil
+}
+
+func (r *Repository) DeleteContinuation(
+	ctx context.Context, db Execer, t *entity.Continuation,
+) error {
+	sql := `UPDATE continuation
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, t.UserID, t.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	t.ID = entity.ContinuationID(id)
+	return nil
+}

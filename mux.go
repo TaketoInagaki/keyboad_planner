@@ -103,10 +103,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.FetchCheck{DB: db, Repo: &r},
 		Validator: v,
 	}
+	dch := &handler.DeleteCheck{
+		Service:   &service.DeleteCheck{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/check", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cch.ServeHTTP)
 		r.Get("/", fch.ServeHTTP)
+		r.Delete("/", dch.ServeHTTP)
 	})
 	// action
 	ca := &handler.CreateOrEditAction{
@@ -121,11 +126,16 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 		Service:   &service.UpdateAction{DB: db, Repo: &r},
 		Validator: v,
 	}
+	da := &handler.DeleteAction{
+		Service:   &service.DeleteAction{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/action", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", ca.ServeHTTP)
 		r.Patch("/", ua.ServeHTTP)
 		r.Get("/", fa.ServeHTTP)
+		r.Delete("/", da.ServeHTTP)
 	})
 
 	// 継続リスト系API
@@ -136,10 +146,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	fc := &handler.FetchContinuationList{
 		Service: &service.FetchContinuationList{DB: db, Repo: &r},
 	}
+	dc := &handler.DeleteContinuation{
+		Service:   &service.DeleteContinuation{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/continuation", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cc.ServeHTTP)
 		r.Get("/", fc.ServeHTTP)
+		r.Delete("/", dc.ServeHTTP)
 	})
 
 	// やりたいことリスト系API
@@ -150,10 +165,15 @@ func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), erro
 	fw := &handler.FetchWishList{
 		Service: &service.FetchWishList{DB: db, Repo: &r},
 	}
+	dw := &handler.DeleteWish{
+		Service:   &service.DeleteWish{DB: db, Repo: &r},
+		Validator: v,
+	}
 	mux.Route("/wish", func(r chi.Router) {
 		r.Use(handler.AuthMiddleware(jwter))
 		r.Post("/", cw.ServeHTTP)
 		r.Get("/", fw.ServeHTTP)
+		r.Delete("/", dw.ServeHTTP)
 	})
 
 	return mux, cleanup, nil

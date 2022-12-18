@@ -68,3 +68,24 @@ func (r *Repository) ListTasks(
 	}
 	return tasks, nil
 }
+
+func (r *Repository) DeleteTask(
+	ctx context.Context, db Execer, t *entity.Task,
+) error {
+	sql := `UPDATE task
+			SET delete_flg = 1
+			WHERE user_id = ?
+				AND id = ?;`
+	result, err := db.ExecContext(
+		ctx, sql, t.UserID, t.ID,
+	)
+	if err != nil {
+		return err
+	}
+	id, err := result.LastInsertId()
+	if err != nil {
+		return err
+	}
+	t.ID = entity.TaskID(id)
+	return nil
+}

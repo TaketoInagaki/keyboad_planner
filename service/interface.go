@@ -15,6 +15,11 @@ type TaskCreator interface {
 type TaskLister interface {
 	ListTasks(ctx context.Context, db store.Queryer, t *entity.Task) (entity.Tasks, error)
 }
+
+type TaskDeleter interface {
+	DeleteTask(ctx context.Context, db store.Execer, t *entity.Task) error
+}
+
 type UserRegister interface {
 	RegisterUser(ctx context.Context, db store.Execer, u *entity.User) error
 }

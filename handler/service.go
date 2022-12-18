@@ -22,6 +22,12 @@ type AddTaskService interface {
 	) (*entity.Task, error)
 }
 
+type DeleteTaskService interface {
+	DeleteTask(
+		ctx context.Context, id entity.TaskID,
+	) (*entity.Task, error)
+}
+
 type RegisterUserService interface {
 	RegisterUser(ctx context.Context, name, password, role string) (*entity.User, error)
 }

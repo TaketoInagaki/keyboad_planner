@@ -42,7 +42,7 @@ type RegisterUserService interface {
 }
 
 type LoginService interface {
-	Login(ctx context.Context, name, pw string) (string, error)
+	Login(ctx context.Context, name, pw string) (string, int, error)
 }
 
 // 振り返り

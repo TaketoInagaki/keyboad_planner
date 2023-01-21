@@ -71,7 +71,7 @@ func (j *JWTer) GenerateToken(ctx context.Context, u entity.User) ([]byte, error
 		// redisのexpireはこれを使う。
 		// https://pkg.go.dev/github.com/go-redis/redis/v8#Client.Set
 		// clock.Durationだから Subする必要がある
-		Expiration(j.Clocker.Now().Add(30*time.Minute)).
+		Expiration(j.Clocker.Now().Add(2160*time.Hour)).
 		Claim(RoleKey, u.Role).
 		Claim(UserNameKey, u.Name).
 		Build()

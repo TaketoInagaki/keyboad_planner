@@ -31,7 +31,7 @@ func (l *Login) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}, http.StatusBadRequest)
 		return
 	}
-	jwt, err := l.Service.Login(ctx, body.UserName, body.Password)
+	jwt, expiry, err := l.Service.Login(ctx, body.UserName, body.Password)
 	if err != nil {
 		RespondJSON(ctx, w, &ErrResponse{
 			Message: err.Error(),
@@ -40,8 +40,10 @@ func (l *Login) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	rsp := struct {
 		AccessToken string `json:"access_token"`
+		ExpiresIn int `json:"expires_in"`
 	}{
 		AccessToken: jwt,
+		ExpiresIn: expiry,
 	}
 
 	RespondJSON(ctx, w, rsp, http.StatusOK)

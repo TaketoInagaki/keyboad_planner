@@ -20,11 +20,11 @@ func (r *Repository) EditCheck(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	c.ID = entity.CheckID(id)
+	c.ID = entity.CheckID(c.ID)
 	return nil
 }
 

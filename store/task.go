@@ -21,11 +21,11 @@ func (r *Repository) EditTask(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	t.ID = entity.TaskID(id)
+	t.ID = entity.TaskID(t.ID)
 	return nil
 }
 

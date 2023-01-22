@@ -21,11 +21,11 @@ func (r *Repository) EditAction(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	c.ID = entity.ActionID(id)
+	c.ID = entity.ActionID(c.ID)
 	return nil
 }
 
@@ -44,11 +44,11 @@ func (r *Repository) UpdateAction(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	c.ID = entity.ActionID(id)
+	c.ID = entity.ActionID(c.ID)
 	return nil
 }
 

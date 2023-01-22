@@ -21,11 +21,11 @@ func (r *Repository) EditReflection(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	ref.ID = entity.ReflectionID(id)
+	ref.ID = entity.ReflectionID(ref.ID)
 	return nil
 }
 

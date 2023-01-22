@@ -20,11 +20,11 @@ func (r *Repository) EditWish(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	w.ID = entity.WishID(id)
+	w.ID = entity.WishID(w.ID)
 	return nil
 }
 

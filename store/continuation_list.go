@@ -20,11 +20,11 @@ func (r *Repository) EditContinuation(
 	if err != nil {
 		return err
 	}
-	id, err := result.LastInsertId()
-	if err != nil {
+	var _, e = result.LastInsertId()
+	if e != nil {
 		return err
 	}
-	con.ID = entity.ContinuationID(id)
+	con.ID = entity.ContinuationID(con.ID)
 	return nil
 }
 
